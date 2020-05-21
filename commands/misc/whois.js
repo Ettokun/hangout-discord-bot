@@ -13,13 +13,13 @@ module.exports = {
     run: async (bot, msg, args) => {
         const member = getMember(msg, args.join(" "));
 
-        const joined = member.joinedAt;
+        const joined = new Date(+member.joinedAt).toDateString();
         const role =
             member.roles.cache
                 .filter(r => r.id !== msg.guild.id)
                 .map(r => r)
                 .join(",") || "none";
-        const created = member.user.createdAt;
+        const created = new Date(member.user.createdAt).toDateString();
 
         let embed = new MessageEmbed()
             .setColor("RANDOM")
@@ -36,7 +36,11 @@ module.exports = {
             .addField("Joined", joined, true)
             .addField("Resgistered", created, true)
             .addField("Role", role)
-            .addField("Member Id", member.user.id, true);
+            .addField("Member Id", member.user.id, true)
+            .setFooter(
+                `${bot.user.username} | ${msg.guild.id}`,
+                bot.user.displayAvatarURL()
+            );
 
         msg.channel.send(embed);
     }
