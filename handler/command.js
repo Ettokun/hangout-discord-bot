@@ -13,5 +13,5 @@ module.exports = bot => {
                 pull.help.alias.forEach(a => bot.alias.set(a, pull.help.name));
         }
     };
-    ["misc", "moderator", "music", "fun", 'info'].forEach(x => load(x));
+    ["misc", "moderator", "fun", "info"].forEach(x => load(x));
 };

@@ -71,18 +71,11 @@ module.exports = {
             command = command.help;
 
             embed.setDescription(`Bot Prefix: ${prefix}\n
-            **Command:** ${command.name.slice(0, 1).toUpperCase() +
-                command.name.slice(1)}
+            **Command:** ${command.name.slice(0, 1).toUpperCase() + command.name.slice(1)}
             **Description:** ${command.description || "Tidak ada Descripsi"}
-            **Usage:** ${
-                command.usage
-                    ? `\`${prefix}${command.name} ${command.usage}\``
-                    : "No Usage"
-            }
+            **Usage:** ${command.usage ? `\`${prefix}${command.name} ${command.usage}\``: "No Usage"}
             **Accessible:** ${command.accessableby || "Member"}
-            **Alias:** ${
-                command.alias ? `\`${command.alias.join(", ")}\`` : "None."
-            }`);
+            **Alias:** ${command.alias ? `\`${command.alias.join(", ")}\`` : "None."}`);
 
             return msg.channel.send(embed);
         }
