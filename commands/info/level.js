@@ -13,7 +13,6 @@ module.exports = {
     },
     run: async (bot, msg, args) => {
         const member = getMember(msg, args.join(" "));
-        console.log(member);
 
         if (!xp[member.user.id]) return msg.channel.send(`Member Tidak Ada!`);
 
