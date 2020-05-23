@@ -3,7 +3,7 @@ const { config } = require("dotenv");
 const { readdirSync } = require("fs");
 
 config({
-    path: "D:\\discord\\bot discord/.env"
+    path: "D:\\discord\\bot discord/.env",
 });
 const prefix = process.env.PREFIX;
 
@@ -12,9 +12,9 @@ module.exports = {
         name: "help",
         description: "Memunculkan Semua Command pada bot",
         alias: ["h", "command", "command"],
-        category: "misc",
+        category: "info",
         usage: "(command)",
-        accessableby: "Member"
+        accessableby: "Member",
     },
     run: async (bot, msg, args) => {
         if (args[0] === "help")
@@ -38,16 +38,16 @@ module.exports = {
                 bot.user.displayAvatarURL
             );
 
-            categories.forEach(category => {
+            categories.forEach((category) => {
                 const dir = bot.commands.filter(
-                    c => c.help.category === category
+                    (c) => c.help.category === category
                 );
                 const capital =
                     category.slice(0, 1).toUpperCase() + category.slice(1);
                 try {
                     embed.addField(
                         `+ ${capital} [${dir.size}]:`,
-                        dir.map(c => `\`${c.help.name}\``).join(" ")
+                        dir.map((c) => `\`${c.help.name}\``).join(", ")
                     );
                 } catch (r) {
                     console.log(r);
@@ -66,28 +66,38 @@ module.exports = {
                         .setDescription(
                             `lakukan \`${prefix}help\` Untuk meliat list command`
                         )
+                        .setFooter(
+                            `© ${msg.guild.me.displayName} | Total Command: ${bot.commands.size}`,
+                            bot.user.displayAvatarURL()
+                        )
                 );
 
             command = command.help;
 
-            embed.setDescription(
-                `Bot Prefix: ${prefix}\n\n**Command:** ${command.name
-                    .slice(0, 1)
-                    .toUpperCase() +
-                    command.name.slice(
-                        1
-                    )}\n**Description:** ${command.description ||
-                    "Tidak ada Descripsi"}\n**Usage:** ${
-                    command.usage
-                        ? `\`${prefix}${command.name} ${command.usage}\``
-                        : "No Usage"
-                }\n**Accessible:** ${command.accessableby ||
-                    "Member"}\n**Alias:** ${
-                    command.alias ? `\`${command.alias.join(", ")}\`` : "None."
-                }`
-            );
-
+            embed
+                .setDescription(
+                    `Bot Prefix: ${prefix}\n\n**Command:** ${
+                        command.name.slice(0, 1).toUpperCase() +
+                        command.name.slice(1)
+                    }\n**Description:** ${
+                        command.description || "Tidak ada Descripsi"
+                    }\n**Usage:** ${
+                        command.usage
+                            ? `\`${prefix}${command.name} ${command.usage}\``
+                            : "No Usage"
+                    }\n**Accessible:** ${
+                        command.accessableby || "Member"
+                    }\n**Alias:** ${
+                        command.alias
+                            ? `\`${command.alias.join(", ")}\``
+                            : "None."
+                    }\n\n**Note:** jika menggunakan kurung () maka artinya itu opsional, jika menggunakan kurung siku [] maka wajib memasukan nilai!`
+                )
+                .setFooter(
+                    `© ${msg.guild.me.displayName} | Total Command: ${bot.commands.size}`,
+                    bot.user.displayAvatarURL()
+                );
             return msg.channel.send(embed);
         }
-    }
+    },
 };

@@ -8,7 +8,7 @@ module.exports = {
         alias: ["lyrics"],
         category: "misc",
         usage: "[Nama lagunya]",
-        accessableby: "Member"
+        accessableby: "Member",
     },
     run: async (bot, msg, args) => {
         const lyric = args.join(" ");
@@ -21,30 +21,34 @@ module.exports = {
         } else {
             const lyrics = await solenno
                 .requestLyricsFor(lyric)
-                .catch(err => console.log(err));
+                .catch((err) => console.log(err));
             const author = await solenno
                 .requestAuthorFor(lyric)
-                .catch(err => console.log(err));
+                .catch((err) => console.log(err));
             const icon = await solenno
                 .requestIconFor(lyric)
-                .catch(err => console.log(err));
+                .catch((err) => console.log(err));
             const title = await solenno
                 .requestTitleFor(lyric)
-                .catch(err => console.log(err));
+                .catch((err) => console.log(err));
 
-            const embed = new MessageEmbed()
-                .setColor("#51a0b8")
-                .setTitle(`**${author} - ${title}**`)
-                .setImage(icon);
-            const embed2 = new MessageEmbed().setColor("#51a0b8")
-                .setDescription(`**Lyrics**
-            ${lyrics}`);
+            if (lyrics.length >= 2048)
+                return msg.channel.send(`lyrics terlalu panjang`);
+            if (lyrics.length < 2048) {
+                const embed = new MessageEmbed()
+                    .setColor("#51a0b8")
+                    .setTitle(`**${author} - ${title}**`)
+                    .setImage(icon);
+                const embed2 = new MessageEmbed().setColor("#51a0b8")
+                    .setDescription(`**Lyrics**
+                ${lyrics}`);
 
-            message
-                .edit(`<@${msg.author.id}> Cek Dm kamu`)
-                .then(message => message.delete({ timeout: 10000 }));
-            msg.author.send(embed);
-            msg.author.send(embed2);
+                message
+                    .edit(`<@${msg.author.id}> Cek Dm kamu`)
+                    .then((message) => message.delete({ timeout: 10000 }));
+                msg.author.send(embed);
+                msg.author.send(embed2);
+            }
         }
-    }
+    },
 };

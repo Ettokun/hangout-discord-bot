@@ -6,9 +6,9 @@ module.exports = {
         name: "whois",
         description: "memberitahu info member",
         alias: ["memberinfo"],
-        category: "misc",
-        usage: "[Mention Member]",
-        accessableby: "Member"
+        category: "info",
+        usage: "(Mention Member)",
+        accessableby: "Member",
     },
     run: async (bot, msg, args) => {
         const member = getMember(msg, args.join(" "));
@@ -16,8 +16,8 @@ module.exports = {
         const joined = new Date(+member.joinedAt).toDateString();
         const role =
             member.roles.cache
-                .filter(r => r.id !== msg.guild.id)
-                .map(r => r)
+                .filter((r) => r.id !== msg.guild.id)
+                .map((r) => r)
                 .join(",") || "none";
         const created = new Date(member.user.createdAt).toDateString();
 
@@ -43,5 +43,5 @@ module.exports = {
             );
 
         msg.channel.send(embed);
-    }
+    },
 };

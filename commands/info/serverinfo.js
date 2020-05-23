@@ -5,35 +5,35 @@ module.exports = {
         name: "serverinfo",
         description: "Memberitahu Info Server",
         alias: ["si", "sinfo", "serverin"],
-        category: "misc",
+        category: "info",
         usage: "",
-        accessableby: "Member"
+        accessableby: "Member",
     },
 
     run: async (bot, msg, args) => {
         // channel count
         const textCount = msg.guild.channels.cache.filter(
-                channel => channel.type === "text"
+                (channel) => channel.type === "text"
             ).size,
             voiceCount = msg.guild.channels.cache.filter(
-                channel => channel.type === "voice"
+                (channel) => channel.type === "voice"
             ).size;
 
         // member count
-        const memberCount = msg.guild.members.cache.filter(m => !m.user.bot)
+        const memberCount = msg.guild.members.cache.filter((m) => !m.user.bot)
             .size;
 
         // menjumblahkan idle dan online member
         const idleMember = msg.guild.members.cache.filter(
-                m => m.presence.status === "idle"
+                (m) => m.presence.status === "idle"
             ).size,
             onlineMember = msg.guild.members.cache.filter(
-                m => m.presence.status === "online"
+                (m) => m.presence.status === "online"
             ).size,
             onlineCount = parseInt(idleMember) + parseInt(onlineMember);
 
         // bot count
-        const botCount = msg.guild.members.cache.filter(m => m.user.bot).size;
+        const botCount = msg.guild.members.cache.filter((m) => m.user.bot).size;
 
         // membuat embed
         const embed = new MessageEmbed()
@@ -53,5 +53,5 @@ module.exports = {
 
         // mengirim pesan embed
         msg.channel.send({ embed });
-    }
+    },
 };
