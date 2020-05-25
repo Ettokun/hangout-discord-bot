@@ -51,11 +51,10 @@ module.exports = async (bot, msg) => {
                     userid: msg.author.id,
                     xp: expAdd,
                     level: 1,
-                    nextLevel: nextlvl,
+                    nextLevel: 500,
                     avatar: msg.author.displayAvatarURL(),
                 });
-
-                nextlvl = level.level * 500;
+                
                 newLevel.save().catch((err) => console.log(err));
             } else {
                 level.xp = level.xp + expAdd;
