@@ -1,18 +1,26 @@
 // node pacage meneger require
 const { MessageEmbed } = require("discord.js");
 const { config } = require("dotenv");
-const fs = require("fs");
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 // file require
-const xp = require("../../exp.json");
-// const levelSchema = require("../../model/level.schema");
+const levelSchema = require("../../model/level.schema");
 
 config({
     path: "D:\\discord\\bot discord/.env",
 });
+
 const prefix = process.env.PREFIX;
-// const pass = process.env.PASSWORDDB;
+const pass = process.env.PASSWORDDB;
+
+(async () => {
+    await mongoose
+        .connect(
+            `mongodb+srv://Kevin-mongo:${pass}@cluster0-tx0mb.gcp.mongodb.net/test?retryWrites=true&w=majority`,
+            { useNewUrlParser: true, useUnifiedTopology: true }
+        )
+        .then(console.log("connect to monggo db"));
+})();
 
 // message listener
 
@@ -24,46 +32,57 @@ module.exports = async (bot, msg) => {
             `Maaf Tidak bisa Gunakan command di${msg.guild.name}`
         );
     // mongoose startmongoose
-    // mongoose end
-
-    // level system start
     let expAdd = Math.floor(Math.random() * 7) + 8;
 
-    if (!xp[msg.author.id]) {
-        xp[msg.author.id] = {
-            xp: 0,
-            level: 1,
-        };
-    }
+    let nextlvl;
 
-    let curxp = xp[msg.author.id].xp;
-    let curlvl = xp[msg.author.id].level;
-    let nextLvl = xp[msg.author.id].level * 300;
-    xp[msg.author.id].xp = parseInt(curxp) + expAdd;
-    console.log();
+    levelSchema.findOne(
+        {
+            userid: msg.author.id,
+            guildid: msg.guild.id,
+        },
+        (err, level) => {
+            if (err) console.log(err);
 
-    if (nextLvl <= xp[msg.author.id].xp) {
-        xp[msg.author.id].level = parseInt(curlvl) + 1;
-        const lvlEmbed = new MessageEmbed()
-            .setColor("BLUE")
-            .setAuthor(`${msg.author.username}`, msg.author.displayAvatarURL())
-            .setDescription(
-                `<@${msg.author.id}> telah naik level ke level ${
-                    xp[msg.author.id].level
-                }`
-            )
-            .setFooter(
-                `${bot.user.username} - Level System`,
-                bot.user.displayAvatarURL()
-            );
+            if (!level) {
+                const newLevel = new levelSchema({
+                    guildid: msg.guild.id,
+                    username: msg.author.username,
+                    userid: msg.author.id,
+                    xp: expAdd,
+                    level: 1,
+                    nextLevel: nextlvl,
+                    avatar: msg.author.displayAvatarURL(),
+                });
 
-        msg.channel.send(lvlEmbed);
-    }
+                nextlvl = level.level * 500;
+                newLevel.save().catch((err) => console.log(err));
+            } else {
+                level.xp = level.xp + expAdd;
 
-    fs.writeFile("./exp.json", JSON.stringify(xp), (err) => {
-        if (err) throw err;
-    });
-    // level sytem end
+                if (level.nextLevel <= level.xp) {
+                    level.level = level.level + 1;
+                    level.nextLevel = level.level * 500;
+                    const lvlEmbed = new MessageEmbed()
+                        .setColor("BLUE")
+                        .setAuthor(`${level.username}`, level.avatar)
+                        .setDescription(
+                            `<@${level.userid}> telah naik level ke level ${level.level}`
+                        )
+                        .setFooter(
+                            `${bot.user.username} - Level System`,
+                            bot.user.displayAvatarURL()
+                        );
+
+                    msg.channel.send(lvlEmbed);
+                }
+
+                level.save().catch((err) => console.log(err));
+            }
+        }
+    );
+
+    // mongoose end
 
     // checking if user not using preifx
     if (!msg.content.startsWith(prefix)) return;

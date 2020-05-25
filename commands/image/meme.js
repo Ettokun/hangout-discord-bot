@@ -6,9 +6,9 @@ module.exports = {
         name: "meme",
         description: "Memunculkan gambar Meme Secara random",
         alias: ["memes"],
-        category: "misc",
+        category: "image",
         usage: "",
-        accessableby: "Member"
+        accessableby: "Member",
     },
     run: async (bot, msg, args) => {
         let reddit = [
@@ -22,7 +22,7 @@ module.exports = {
             "dankmemes",
             "AdviceAnimals",
             "2meirl4meirl",
-            "MemesOfAnime"
+            "MemesOfAnime",
         ];
 
         let subreddit = reddit[Math.floor(Math.random() * reddit.length)];
@@ -30,26 +30,26 @@ module.exports = {
         msg.channel.startTyping();
 
         randomPuppy(subreddit)
-            .then(url => {
+            .then((url) => {
                 snekFetch
                     .get(url)
-                    .then(async res => {
+                    .then(async (res) => {
                         await msg.channel
                             .send({
                                 files: [
                                     {
                                         attachment: res.body,
-                                        name: "meme.png"
-                                    }
-                                ]
+                                        name: "meme.png",
+                                    },
+                                ],
                             })
-                            .then(m => {
+                            .then((m) => {
                                 msg.channel.stopTyping();
                                 msg.delete();
                             });
                     })
-                    .catch(err => console.log(err));
+                    .catch((err) => console.log(err));
             })
-            .catch(err => console.log(err));
-    }
+            .catch((err) => console.log(err));
+    },
 };

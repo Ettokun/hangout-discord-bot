@@ -1,8 +1,8 @@
 const { readdirSync } = require("fs");
 
-module.exports = bot => {
-    const load = dirs => {
-        const commands = readdirSync(`./commands/${dirs}/`).filter(d =>
+module.exports = (bot) => {
+    const load = (dirs) => {
+        const commands = readdirSync(`./commands/${dirs}/`).filter((d) =>
             d.endsWith(".js")
         );
         for (let file of commands) {
@@ -10,8 +10,10 @@ module.exports = bot => {
             console.log(`${file} SUCCESS LOAD`);
             bot.commands.set(pull.help.name, pull);
             if (pull.help.alias)
-                pull.help.alias.forEach(a => bot.alias.set(a, pull.help.name));
+                pull.help.alias.forEach((a) =>
+                    bot.alias.set(a, pull.help.name)
+                );
         }
     };
-    ["misc", "moderator", "fun", "info"].forEach(x => load(x));
+    ["misc", "moderator", "fun", "info", "image"].forEach((x) => load(x));
 };

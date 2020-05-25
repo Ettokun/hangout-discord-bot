@@ -6,17 +6,17 @@ module.exports = {
         name: "dog",
         description: "Memunculkan gambar anjing",
         alias: ["dogge", "puppy"],
-        category: "misc",
+        category: "image",
         usage: "",
-        accessableby: "Member"
+        accessableby: "Member",
     },
     run: async (bot, msg, args) => {
         // api https://dog.ceo/api/breeds/image/random
         let message = await msg.channel.send("Loading...");
 
         fetch("https://dog.ceo/api/breeds/image/random")
-            .then(data => data.json())
-            .then(res => {
+            .then((data) => data.json())
+            .then((res) => {
                 if (!res) {
                     msg.channel();
                     msg.channel.send("Coba lagi!");
@@ -43,5 +43,5 @@ module.exports = {
                 message.delete();
                 msg.channel.send(embed);
             });
-    }
+    },
 };

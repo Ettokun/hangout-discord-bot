@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const xp = require("../../exp.json");
+const levelSchema = require("../../model/level.schema");
 const { getMember } = require("../../functions.js");
 
 module.exports = {
@@ -14,30 +14,39 @@ module.exports = {
     run: async (bot, msg, args) => {
         const member = getMember(msg, args.join(" "));
 
-        if (!xp[member.user.id]) return msg.channel.send(`Member Tidak Ada!`);
+        const mention = !member ? msg.author.id : member.user.id;
 
-        let curxp = xp[member.user.id].xp;
-        let curlvl = xp[member.user.id].level;
-        let nextLvl = xp[member.user.id].level * 300;
+        levelSchema.findOne(
+            {
+                userid: mention,
+                guildid: msg.guild.id,
+            },
+            (err, level) => {
+                if (err) throw err;
 
-        const lvlEmbed = new MessageEmbed()
-            .setColor("BLUE")
-            .setAuthor(
-                `${member.user.username || member.nickname}#${
-                    member.user.discriminator
-                }`,
-                msg.author.displayAvatarURL()
-            )
-            .setDescription(
-                `Level: **${curlvl}**\nTotal Xp: **${curxp}**\n(perlu ${
-                    nextLvl - curxp
-                } untuk naik level)\n\nJika bot maintance level akan reset`
-            )
-            .setFooter(
-                `${bot.user.username} - Level System`,
-                bot.user.displayAvatarURL()
-            );
+                if (!level) return msg.channel.send(`Member Tidak Ada!`);
 
-        msg.channel.send(lvlEmbed);
+                const lvlEmbed = new MessageEmbed()
+                    .setColor("BLUE")
+                    .setAuthor(
+                        `${level.username}#${member.user.discriminator}`,
+                        level.avatar
+                    )
+                    .setThumbnail(level.avatar)
+                    .setDescription(
+                        `Level: **${level.level}**\nTotal Xp: **${
+                            level.xp
+                        }**\n(perlu ${
+                            level.nextLevel - level.xp
+                        } XP. Komonikasi dengan sesama agai dapat naik level`
+                    )
+                    .setFooter(
+                        `${bot.user.username} - Level System`,
+                        bot.user.displayAvatarURL()
+                    );
+
+                msg.channel.send(lvlEmbed);
+            }
+        );
     },
 };
