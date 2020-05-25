@@ -16,7 +16,7 @@ const pass = process.env.PASSWORDDB;
 (async () => {
     await mongoose
         .connect(
-            `mongodb+srv://Kevin-mongo:${pass}@cluster0-tx0mb.gcp.mongodb.net/test?retryWrites=true&w=majority`,
+            `mongodb+srv://Kevin-mongo:${pass}@cluster0-tx0mb.gcp.mongodb.net/discordlvl?retryWrites=true&w=majority`,
             { useNewUrlParser: true, useUnifiedTopology: true }
         )
         .then(console.log("connect to monggo db"));
