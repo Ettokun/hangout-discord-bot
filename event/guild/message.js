@@ -4,33 +4,72 @@ const { config } = require("dotenv");
 const mongoose = require("mongoose");
 
 // file require
-const levelSchema = require("../../model/level.schema");
+const levelSchema = require("../../model/level.js");
+const PrefixSchema = require("../../model/prefix.js");
 
+// cofig env
 config({
     path: "D:\\discord\\bot discord/.env",
 });
 
-const prefix = process.env.PREFIX;
-const pass = process.env.PASSWORDDB;
+// prefix
+let customPrefix;
+const database = process.env.DATABASE;
 
 (async () => {
     await mongoose
-        .connect(
-            `mongodb+srv://Kevin-mongo:${pass}@cluster0-tx0mb.gcp.mongodb.net/discordlvl?retryWrites=true&w=majority`,
-            { useNewUrlParser: true, useUnifiedTopology: true }
-        )
+        .connect(`${database}`, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        })
         .then(console.log("connect to monggo db"));
 })();
 
 // message listener
 
 module.exports = async (bot, msg) => {
-    // j=if msg from bod and dm
     if (msg.author.bot) return;
     if (msg.channel.type === "dm")
         return msg.author.send(
             `Maaf Tidak bisa Gunakan command di${msg.guild.name}`
         );
+
+    const member = msg.guild.members.cache.filter((m) => !m.user.bot).size;
+
+    PrefixSchema.findOne(
+        {
+            guildName: msg.guild.name,
+            guildID: msg.guild.id,
+        },
+        async (err, pref) => {
+            if (err) console.log(err);
+
+            if (!pref) {
+                const newPrefix = new PrefixSchema({
+                    guildName: msg.guild.name,
+                    guildID: msg.guild.id,
+                    prefix: ">",
+                    member,
+                });
+
+                newPrefix.save().catch((err) => console.log(err));
+            }
+
+            customPrefix = pref.prefix;
+        }
+    );
+
+    const prefix = (await customPrefix) || ">";
+    // j=if msg from bod and dm
+
+    // making args
+    let args = msg.content.slice(prefix.length).trim().split(/ +/g);
+    let cmd = args.shift().toLowerCase();
+
+    // take command from command handler
+    let command =
+        (await bot.commands.get(cmd)) || bot.commands.get(bot.alias.get(cmd));
+
     // mongoose startmongoose
     let expAdd = Math.floor(Math.random() * 7) + 8;
 
@@ -51,10 +90,10 @@ module.exports = async (bot, msg) => {
                     userid: msg.author.id,
                     xp: expAdd,
                     level: 1,
-                    nextLevel: 500,
+                    nextLevel: nextlvl,
                     avatar: msg.author.displayAvatarURL(),
                 });
-                
+
                 newLevel.save().catch((err) => console.log(err));
             } else {
                 level.xp = level.xp + expAdd;
@@ -85,14 +124,6 @@ module.exports = async (bot, msg) => {
 
     // checking if user not using preifx
     if (!msg.content.startsWith(prefix)) return;
-
-    // making args
-    let args = msg.content.slice(prefix.length).trim().split(/ +/g);
-    let cmd = args.shift().toLowerCase();
-
-    // take command from command handler
-    let command =
-        (await bot.commands.get(cmd)) || bot.commands.get(bot.alias.get(cmd));
 
     // ceking jika member salah memasukan command
     if (command === undefined) {

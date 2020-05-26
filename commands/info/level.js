@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const levelSchema = require("../../model/level.schema");
+const levelSchema = require("../../model/level.js");
 const { getMember } = require("../../functions.js");
 
 module.exports = {
