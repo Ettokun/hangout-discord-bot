@@ -82,7 +82,7 @@ module.exports = {
                         )
                         .addField(
                             "**Kasus Hari Ini:**",
-                            `${data.todayCases} Penanganan`,
+                            `${data.todayCases} Kasus`,
                             true
                         )
                         .addField(
@@ -138,7 +138,7 @@ module.exports = {
                         )
                         .addField(
                             "**Kasus Hari Ini:**",
-                            `${data.todayCases} Penanganan`,
+                            `${data.todayCases} Kasus`,
                             true
                         )
                         .addField(
