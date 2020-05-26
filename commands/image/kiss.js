@@ -10,9 +10,9 @@ const imgTOKEN = process.env.imgTOKEN;
 
 module.exports = {
     help: {
-        name: "hug",
-        description: "Bot mengirim Gambar/gif hug",
-        alias: "",
+        name: "kiss",
+        description: "Bot mengirim Gambar/gif kiss",
+        alias: ["kissing"],
         category: "image",
         usage: "",
         accessableby: "Member",
@@ -29,7 +29,7 @@ module.exports = {
             }, 5000);
         }
 
-        fetch(`https://api.ksoft.si/images/random-image?tag=hug`, {
+        fetch(`https://api.ksoft.si/images/random-image?tag=kiss`, {
             method: "get",
             headers: {
                 "Content-Type": "application/json",

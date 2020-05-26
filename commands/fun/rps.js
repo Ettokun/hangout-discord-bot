@@ -6,8 +6,8 @@ module.exports = {
         description: "Permainan Rock, Paper, Scissors",
         alias: ["suit", "gbt"],
         category: "fun",
-        usage: "[rock, paper,scissors]",
-        accessableby: "Member"
+        usage: "[rock, paper, scissors]",
+        accessableby: "Member",
     },
     run: async (bot, msg, args) => {
         // jika ada pilihan
@@ -78,5 +78,5 @@ module.exports = {
                 .setDescription("Masukan : [rock, paper, scissors]");
             msg.channel.send(embed);
         }
-    }
+    },
 };

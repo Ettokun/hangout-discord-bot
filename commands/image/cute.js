@@ -10,9 +10,9 @@ const imgTOKEN = process.env.imgTOKEN;
 
 module.exports = {
     help: {
-        name: "hug",
-        description: "Bot mengirim Gambar/gif hug",
-        alias: "",
+        name: "cute",
+        description: "Bot mengirim Gambar/gif kiss",
+        alias: ["cutes"],
         category: "image",
         usage: "",
         accessableby: "Member",
@@ -29,7 +29,7 @@ module.exports = {
             }, 5000);
         }
 
-        fetch(`https://api.ksoft.si/images/random-image?tag=hug`, {
+        fetch(`https://api.ksoft.si/images/random-aww`, {
             method: "get",
             headers: {
                 "Content-Type": "application/json",
@@ -44,8 +44,9 @@ module.exports = {
                         msg.author.displayAvatarURL()
                     )
                     .setTitle(`Jika Gambar tidak Muncul Click disini`)
-                    .setURL(data.url)
-                    .setImage(data.url)
+                    .setURL(data.source)
+                    .setDescription(`Kamu juga lucu KOK :kissing_heart:`)
+                    .setImage(data.image_url)
                     .setFooter(
                         `${bot.user.username} | ${data.tag}`,
                         bot.user.displayAvatarURL()

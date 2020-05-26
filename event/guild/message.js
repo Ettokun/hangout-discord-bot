@@ -9,7 +9,7 @@ const PrefixSchema = require("../../model/prefix.js");
 
 // cofig env
 config({
-    path: "D:\\discord\\bot discord/.env",
+    path: "D:\\discord\\hangout-discord-bot/.env",
 });
 
 // prefix
@@ -24,6 +24,8 @@ const database = process.env.DATABASE;
         })
         .then(console.log("connect to monggo db"));
 })();
+
+const cooldown = new Set();
 
 // message listener
 
@@ -135,6 +137,14 @@ module.exports = async (bot, msg) => {
     }
     // ceking jika member melakukan command
     if (command) {
-        command.run(bot, msg, args);
+        if (cooldown.has(msg.author.id)) {
+            return msg.channel.send(`Gunakan command Setelah 5 detik`);
+        } else {
+            cooldown.add(msg.author.id);
+            setTimeout(() => {
+                cooldown.delete(msg.author.id);
+            }, 5000);
+            command.run(bot, msg, args);
+        }
     }
 };

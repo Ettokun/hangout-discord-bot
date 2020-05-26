@@ -22,6 +22,8 @@ module.exports = {
                 `Pls masukan \`${prefix}help\` / \`${prefix}help (command Name)\` Saja!`
             );
 
+        const theOwner = "@kevin_octavian_";
+
         const embed = new MessageEmbed()
             .setColor("#ADD8E6")
             .setAuthor(`${msg.guild.me.displayName} Help`, msg.guild.iconURL)
@@ -34,7 +36,7 @@ module.exports = {
                 `These are the avaliable commands for ${msg.guild.me.displayName}\n\nThe bot prefix is **${prefix}**`
             );
             embed.setFooter(
-                `© ${msg.guild.me.displayName} | Total Command: ${bot.commands.size}`,
+                `© ${msg.guild.me.displayName} | Total Command: ${bot.commands.size} | CreateBY: ${theOwner}`,
                 bot.user.displayAvatarURL
             );
 
@@ -67,7 +69,7 @@ module.exports = {
                             `lakukan \`${prefix}help\` Untuk meliat list command`
                         )
                         .setFooter(
-                            `© ${msg.guild.me.displayName} | Total Command: ${bot.commands.size}`,
+                            `© ${msg.guild.me.displayName} | Total Command: ${bot.commands.size} | CreateBY: ${theOwner}`,
                             bot.user.displayAvatarURL()
                         )
                 );
@@ -94,7 +96,7 @@ module.exports = {
                     }\n\n**Note:** jika menggunakan kurung () maka artinya itu opsional, jika menggunakan kurung siku [] maka wajib memasukan nilai!`
                 )
                 .setFooter(
-                    `© ${msg.guild.me.displayName} | Total Command: ${bot.commands.size}`,
+                    `© ${msg.guild.me.displayName} | Total Command: ${bot.commands.size} | CreateBY: ${theOwner}`,
                     bot.user.displayAvatarURL()
                 );
             return msg.channel.send(embed);

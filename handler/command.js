@@ -15,5 +15,7 @@ module.exports = (bot) => {
                 );
         }
     };
-    ["misc", "moderator", "fun", "info", "image"].forEach((x) => load(x));
+    ["fun", "image", "info", "misc", "moderator", "nsfw"].forEach((x) =>
+        load(x)
+    );
 };

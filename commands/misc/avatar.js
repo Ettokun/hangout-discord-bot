@@ -8,7 +8,7 @@ module.exports = {
         alias: ["profile"],
         category: "misc",
         usage: "[mention member]",
-        accessableby: "Member"
+        accessableby: "Member",
     },
     run: async (bot, msg, args) => {
         const member = getMember(msg, args.join(" "));
@@ -24,5 +24,5 @@ module.exports = {
             .setDescription(`**${member.nickname || member.user.username}**`)
             .setImage(member.user.avatarURL());
         msg.channel.send(embed);
-    }
+    },
 };

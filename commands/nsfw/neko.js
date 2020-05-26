@@ -10,14 +10,17 @@ const imgTOKEN = process.env.imgTOKEN;
 
 module.exports = {
     help: {
-        name: "hug",
-        description: "Bot mengirim Gambar/gif hug",
+        name: "neko",
+        description: "Bot mengirim Gambar/gif neko",
         alias: "",
-        category: "image",
+        category: "nsfw",
         usage: "",
         accessableby: "Member",
     },
     run: async (bot, msg, args) => {
+        if (!msg.channel.nsfw)
+            return msg.channel.send(`Kamu Harus Berada di NSFW Channel`);
+
         if (cooldown.has(msg.author.id)) {
             return msg.channel
                 .send(`Tunggu selama 5 detik untuk menggunakan comment`)
@@ -29,7 +32,7 @@ module.exports = {
             }, 5000);
         }
 
-        fetch(`https://api.ksoft.si/images/random-image?tag=hug`, {
+        fetch(`https://api.ksoft.si/images/random-image?tag=neko`, {
             method: "get",
             headers: {
                 "Content-Type": "application/json",
