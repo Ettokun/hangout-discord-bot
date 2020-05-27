@@ -48,7 +48,7 @@ module.exports = {
                     .setDescription(`Kamu juga lucu KOK :kissing_heart:`)
                     .setImage(data.image_url)
                     .setFooter(
-                        `${bot.user.username} | ${data.tag}`,
+                        `${bot.user.username} | Cute`,
                         bot.user.displayAvatarURL()
                     );
 

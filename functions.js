@@ -8,7 +8,7 @@ module.exports = {
             target = msg.mentions.members.first();
         }
         if (!target && toFind) {
-            target = msg.guild.members.find(member => {
+            target = msg.guild.members.cache.find((member) => {
                 return (
                     member.displayName.toLowerCase().includes(toFind) ||
                     member.user.tag.toLowerCase().includes(toFind)
@@ -18,5 +18,5 @@ module.exports = {
         if (!target) target = msg.member;
 
         return target;
-    }
+    },
 };

@@ -7,15 +7,15 @@ module.exports = {
         alias: ["changenick"],
         category: "moderator",
         usage: "[Name target] [new Nick]",
-        accessableby: "Moderator/Admin"
+        accessableby: "Moderator/Admin",
     },
     run: async (bot, msg, args) => {
-        return msg.channel.send("Command sedang eror!");
-
         if (!msg.member.hasPermission("MANAGE_CHANNEL"))
             return msg.channel.send("Tidak memiliki IZIN!");
+
         if (!args[0] && !args[1])
             return msg.channel.send(">setnick [Mention] [Nick baru]");
+
         if (!args[0] || !args[1])
             return msg.channel.send(">setnick [Mention] [Nick baru]");
 
@@ -25,6 +25,11 @@ module.exports = {
         const newNick = args.slice(1).join(" ");
 
         // console.log(member);
-        member.setNickname(newNick, "Change it").catch(e => console.log(e));
-    }
+        member.setNickname(newNick, "Change it").catch((e) => {
+            console.log(e);
+            msg.channel
+                .send(e.message)
+                .then((msg) => msg.delete({ timeout: 20000 }));
+        });
+    },
 };

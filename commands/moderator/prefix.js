@@ -23,7 +23,6 @@ module.exports = {
 
         prefix.findOne(
             {
-                guildName: msg.guild.name,
                 guildID: msg.guild.id,
             },
             (err, pref) => {
@@ -36,10 +35,14 @@ module.exports = {
                     );
                 }
 
-                if (!args[0]) return;
+                if (args[0] === newPrefix) {
+                    return msg.channel.send(
+                        `Tidak Bisa MengUpdate Ke Prefix Yang Sama`
+                    );
+                }
 
                 const embed = new MessageEmbed()
-                    .setAuthor("msg.guild.name", bot.user.displayAvatarURL())
+                    .setAuthor(pref.guildName, bot.user.displayAvatarURL())
                     .setThumbnail(msg.guild.iconURL());
 
                 pref.prefix = args[0];

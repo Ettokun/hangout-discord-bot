@@ -41,6 +41,7 @@ module.exports = {
         })
             .then((res) => res.json())
             .then((data) => {
+                console.log(data);
                 const embed = new MessageEmbed()
                     .setAuthor(
                         msg.author.username,

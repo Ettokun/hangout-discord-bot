@@ -8,13 +8,13 @@ module.exports = {
         alias: "",
         category: "misc",
         usage: "",
-        accessableby: "Member"
+        accessableby: "Member",
     },
     run: async (bot, msg, args) => {
         let firstTime = Date.now();
-        msg.channel.send(`Pong!`).then(msg => {
+        msg.channel.send(`Pong!`).then((msg) => {
             let endTime = Date.now();
             msg.edit(`Pong ${endTime - firstTime}ms`);
         });
-    }
+    },
 };

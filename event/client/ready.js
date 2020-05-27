@@ -1,18 +1,14 @@
 const discord = require("discord.js");
-const { config } = require("dotenv");
-config({
-    path: "D:\\discord\\hangout-discord-bot/.env",
-});
-const prefix = process.env.PREFIX;
 
 module.exports = async (bot) => {
-    console.log(`\n${bot.user.username} siap digunakan`);
+    console.log(`\n${bot.user.username} siap digunakan ${bot.uptime}ms`);
 
     const activity = [
-        `${prefix}help`,
+        `>help`,
         `<3 U`,
-        `${prefix}invite`,
+        `>invite`,
         `Hope You Enjoy`,
+        `${bot.guilds.cache.size} server use this bot`,
     ];
 
     setInterval(() => {
@@ -20,7 +16,7 @@ module.exports = async (bot) => {
         bot.user.setActivity(
             `${aktivitas} | ${bot.user.username} create by Kevin`,
             {
-                type: "LISTENING",
+                type: "PLAYING",
             }
         );
     }, 10000);

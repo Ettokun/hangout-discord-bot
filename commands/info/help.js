@@ -1,22 +1,16 @@
 const { MessageEmbed } = require("discord.js");
-const { config } = require("dotenv");
 const { readdirSync } = require("fs");
-
-config({
-    path: "D:\\discord\\bot discord/.env",
-});
-const prefix = process.env.PREFIX;
 
 module.exports = {
     help: {
         name: "help",
         description: "Memunculkan Semua Command pada bot",
-        alias: ["h", "command", "command"],
+        alias: ["h", "command"],
         category: "info",
         usage: "(command)",
         accessableby: "Member",
     },
-    run: async (bot, msg, args) => {
+    run: async (bot, msg, args, prefix) => {
         if (args[0] === "help")
             return msg.channel.send(
                 `Pls masukan \`${prefix}help\` / \`${prefix}help (command Name)\` Saja!`

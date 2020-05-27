@@ -7,7 +7,7 @@ module.exports = {
         alias: ["saying", "talk"],
         category: "misc",
         usage: "[Tulis apapun]",
-        accessableby: "Member"
+        accessableby: "Member",
     },
     run: async (bot, msg, args) => {
         if (!msg.member.hasPermission("MANAGE_MESSAGES")) {
@@ -17,14 +17,10 @@ module.exports = {
         if (!args.join(" ")) {
             return msg.channel.send("Masukan kata yang ingin di ucapkan");
         }
-
-        msg.channel.startTyping();
-
         let saying = args.join(" ");
 
         msg.delete().catch();
 
         await msg.channel.send(saying);
-        msg.channel.stopTyping(true);
-    }
+    },
 };

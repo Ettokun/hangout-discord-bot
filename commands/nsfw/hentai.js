@@ -53,7 +53,7 @@ module.exports = {
                     .setURL(data.url)
                     .setImage(data.url)
                     .setFooter(
-                        `${bot.user.username} | NSFW`,
+                        `${bot.user.username} | ${data.tag}`,
                         bot.user.displayAvatarURL()
                     );
 
