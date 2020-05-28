@@ -3,11 +3,11 @@ const { getMember } = require("../../functions");
 module.exports = {
     help: {
         name: "kick",
-        description: "Mengkick Member",
+        description: "kick the Member",
         alias: ["kc"],
         category: "moderator",
         usage: "[User] (Reason)",
-        accessableby: "Moderator/Admin"
+        accessableby: "Moderator/Admin",
     },
 
     run: async (bot, msg, args) => {
@@ -16,12 +16,12 @@ module.exports = {
 
         if (!msg.member.hasPermission("MANAGE_CHANNEL"))
             return msg.channel
-                .send("Tidak memiliki izin")
-                .then(m => m.delete({ timeout: 10000 }));
+                .send("No have Permisson")
+                .then((m) => m.delete({ timeout: 10000 }));
         if (!args[0] || member === undefined)
             return msg.channel
-                .send("Masukan ``@user`` Untuk Melanjutkan")
-                .then(m => m.delete({ timeout: 10000 }));
+                .send("Mention `@user` To kick his/her from server")
+                .then((m) => m.delete({ timeout: 10000 }));
 
         const reason = args.join(" ").slice(22) || "NO REASON!";
 
@@ -30,9 +30,9 @@ module.exports = {
             .kick(reason)
             .then(() =>
                 msg.channel
-                    .send(`<@${member.user.id}> Berhasil di Kick!`)
-                    .then(m => m.delete({ timeout: 10000 }))
+                    .send(`<@${member.user.id}> Succesful Kicked!`)
+                    .then((m) => m.delete({ timeout: 10000 }))
             )
-            .catch(err => console.log(err));
-    }
+            .catch((err) => console.log(err));
+    },
 };

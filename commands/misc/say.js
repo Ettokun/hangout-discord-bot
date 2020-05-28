@@ -3,19 +3,15 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
     help: {
         name: "say",
-        description: "Bot akan Menulis ulang yang telah di tulis",
+        description: "Bot Will say what you wanna say",
         alias: ["saying", "talk"],
         category: "misc",
-        usage: "[Tulis apapun]",
+        usage: "[word]",
         accessableby: "Member",
     },
     run: async (bot, msg, args) => {
-        if (!msg.member.hasPermission("MANAGE_MESSAGES")) {
-            return msg.channel.send("Tidak memiliki izin!");
-        }
-
         if (!args.join(" ")) {
-            return msg.channel.send("Masukan kata yang ingin di ucapkan");
+            return msg.channel.send("Inclue the word");
         }
         let saying = args.join(" ");
 

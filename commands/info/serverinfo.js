@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
     help: {
         name: "serverinfo",
-        description: "Memberitahu Info Server",
+        description: "give Information of Server",
         alias: ["si", "sinfo", "serverin"],
         category: "info",
         usage: "",

@@ -11,50 +11,81 @@ module.exports = {
         usage: "(Masukan negara) / (ketik country untuk melihat semua negara)",
         accessableby: "Member",
     },
-    run: async (bot, msg, args) => {
-        let message = await msg.channel.send("Tunggu Sebentar..");
+    run: async (bot, msg, args, prefix) => {
+        let message = await msg.channel.send("Please Wait..");
 
-        if (args.join(" ") === "country" || args.join(" ") === "country 2") {
-            if (!args[1]) {
-                const embed = new MessageEmbed()
-                    .setColor([0, 50, 255])
-                    .setAuthor(
-                        "**Ketik** (>corona country 2) Untuk membuka page 2"
-                    )
-                    .setDescription(
-                        `**Berhasil Menadapatkan Nama Wilayah**\n\n**wilayah:**\n\`${dataCountry.join(
-                            ", "
-                        )}\``
-                    )
-                    .setFooter(
-                        `${bot.user.username} | Corona`,
-                        bot.user.displayAvatarURL()
+        if (args.join(" ") === "country") {
+            const country = [dataCountry, dataCountry2];
+            let page = 1;
+
+            const embed = new MessageEmbed()
+                .setColor([0, 50, 255])
+                .setAuthor(`${bot.user.username}`, bot.user.displayAvatarURL())
+                .setDescription(
+                    `**Country:**\n\`${country[page - 1].join(", ")}\``
+                )
+                .setFooter(
+                    `${bot.user.username} | Corona | page ${page} of ${country.length}`,
+                    bot.user.displayAvatarURL()
+                );
+
+            // :arrow_left: :arrow_right:
+            message.delete();
+            msg.channel.send(embed).then((m) => {
+                m.react("⬅️").then((r) => {
+                    m.react("➡️");
+
+                    const backwardsFilter = (react, user) =>
+                        react.emoji.name === `⬅️` && user.id === msg.author.id;
+                    const forwardsFilter = (react, user) =>
+                        react.emoji.name === `➡️` && user.id === msg.author.id;
+
+                    const backwards = m.createReactionCollector(
+                        backwardsFilter,
+                        { time: 60000 }
                     );
+                    const forwards = m.createReactionCollector(forwardsFilter, {
+                        time: 60000,
+                    });
 
-                message.delete();
-                msg.channel.send(embed);
-            }
-            if (args[1]) {
-                const embed = new MessageEmbed()
-                    .setColor([0, 50, 255])
-                    .setAuthor("(>corona country 2) Untuk membuka page 2")
-                    .setDescription(
-                        `**Berhasil Menadapatkan Nama Wilayah**\n\n**wilayah:**\n\`${dataCountry2.join(
-                            ", "
-                        )}\``
-                    )
-                    .setFooter(
-                        `${bot.user.username} | Corona`,
-                        bot.user.displayAvatarURL()
-                    );
+                    backwards.on("collect", (r) => {
+                        if (page === 1) return;
+                        page--;
+                        embed
+                            .setDescription(
+                                `**Country:**\n\`${country[page - 1].join(
+                                    ", "
+                                )}\``
+                            )
+                            .setFooter(
+                                `${bot.user.username} | Corona | page ${page} of ${country.length}`,
+                                bot.user.displayAvatarURL()
+                            );
+                        m.edit(embed);
+                    });
+                    forwards.on("collect", (r) => {
+                        if (page === country.length) return;
+                        page++;
+                        embed
+                            .setDescription(
+                                `**Country:**\n\`${country[page - 1].join(
+                                    ", "
+                                )}\``
+                            )
+                            .setFooter(
+                                `${bot.user.username} | Corona | page ${page} of ${country.length}`,
+                                bot.user.displayAvatarURL()
+                            );
+                        m.edit(embed);
+                    });
+                });
+            });
 
-                message.delete();
-                msg.channel.send(embed);
-            }
             return;
         }
 
         if (!args.join(" ")) {
+            // fetch global statistic
             fetch("https://disease.sh/v2/all?yesterday=true")
                 .then((res) => res.json())
                 .then((data) => {
@@ -67,27 +98,38 @@ module.exports = {
                             bot.user.username,
                             bot.user.displayAvatarURL()
                         )
-                        .setDescription("**Hasil Data**")
-                        .addField("**Update:**", tanggal)
-                        .addField("**kasus:**", `${data.cases} Kasus`, true)
+                        .setDescription(
+                            `**#STAYATHOME**\nType ${prefix}corona [country name]`
+                        )
+                        .addField(":calendar_spiral:**Update:**", tanggal)
                         .addField(
-                            "**Penanganan:**",
-                            `${data.recovered} Penanganan`,
+                            ":bar_chart:**Cases:**",
+                            `${data.cases} Cases`,
                             true
                         )
                         .addField(
-                            "**Kematian:**",
-                            `${data.deaths} Kematian`,
+                            ":head_bandage:**Recovered:**",
+                            `${data.recovered} Recovered`,
                             true
                         )
                         .addField(
-                            "**Kasus Hari Ini:**",
-                            `${data.todayCases} Kasus`,
+                            ":skull_crossbones:**Deaths:**",
+                            `${data.deaths} Deaths`,
                             true
                         )
                         .addField(
-                            "**Kematian Hari Ini:**",
-                            `${data.todayDeaths} Kematian`,
+                            ":newspaper:**today Cases:**",
+                            `${data.todayCases} Cases`,
+                            true
+                        )
+                        .addField(
+                            ":mask:**Today Recovered:**",
+                            `${data.active} Recovered`,
+                            true
+                        )
+                        .addField(
+                            ":skull:**Today Deaths:**",
+                            `${data.todayDeaths} deaths`,
                             true
                         )
                         .setFooter(
@@ -104,6 +146,7 @@ module.exports = {
                     msg.channel.send("Request gagal! Mohon Cek Kembali");
                 });
         } else {
+            // fetch country statistic
             fetch(
                 `https://disease.sh/v2/countries/${args.join(
                     " "
@@ -120,30 +163,43 @@ module.exports = {
                             bot.user.username,
                             bot.user.displayAvatarURL()
                         )
-                        .setDescription("**Hasil Data Kemaren**")
+                        .setDescription("**#STAYATHOME**")
                         .setThumbnail(data.countryInfo.flag)
-                        .addField("**Update:**", tanggal, true)
-                        .addField("**Negara:**", `${data.country}`, true)
-                        .addField("**Benua:**", `${data.continent}`, true)
-                        .addField("**kasus:**", `${data.cases} Kasus`, true)
+                        .addField(":calendar_spiral:**Update:**", tanggal, true)
+                        .addField(":map:**Country:**", `${data.country}`, true)
                         .addField(
-                            "**Penanganan:**",
-                            `${data.recovered} Penanganan`,
+                            ":earth_asia:**Continent:**",
+                            `${data.continent}`,
                             true
                         )
                         .addField(
-                            "**Kematian:**",
-                            `${data.deaths} Kematian`,
+                            ":bar_chart:**Cases:**",
+                            `${data.cases} Cases`,
                             true
                         )
                         .addField(
-                            "**Kasus Hari Ini:**",
-                            `${data.todayCases} Kasus`,
+                            ":head_bandage:**Recovered:**",
+                            `${data.recovered} Recovered`,
                             true
                         )
                         .addField(
-                            "**Kematian Hari Ini:**",
-                            `${data.todayDeaths} Kematian`,
+                            ":skull_crossbones:**Deaths:**",
+                            `${data.deaths} Deaths`,
+                            true
+                        )
+                        .addField(
+                            ":newspaper:**today Cases:**",
+                            `${data.todayCases} Cases`,
+                            true
+                        )
+                        .addField(
+                            ":mask:**Today Recovered:**",
+                            `${data.active} Recovered`,
+                            true
+                        )
+                        .addField(
+                            ":skull:**Today Deaths:**",
+                            `${data.todayDeaths} deaths`,
                             true
                         )
                         .setFooter(
@@ -157,9 +213,7 @@ module.exports = {
                 .catch((err) => {
                     msg.delete();
                     message.delete();
-                    msg.channel.send(
-                        "ketik (>corona country) Untuk meliat nama daerah"
-                    );
+                    msg.channel.send("Type >corona country To see country");
                 });
         }
     },

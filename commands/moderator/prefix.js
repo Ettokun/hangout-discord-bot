@@ -18,7 +18,7 @@ module.exports = {
 
         if (!msg.member.hasPermission("MANAGE_SERVER"))
             return msg.channel
-                .send("Tidak memiliki izin")
+                .send("No Have Permission")
                 .then((m) => m.delete({ timeout: 10000 }));
 
         prefix.findOne(
@@ -31,14 +31,12 @@ module.exports = {
                 newPrefix = pref.prefix;
                 if (!args[0]) {
                     return msg.channel.send(
-                        `Bot Prefix: ${newPrefix}\nketik \`${newPrefix}prefix [Prefix baru]\``
+                        `Bot Prefix: ${newPrefix}\nType \`${newPrefix}prefix [NewPrefix]\``
                     );
                 }
 
                 if (args[0] === newPrefix) {
-                    return msg.channel.send(
-                        `Tidak Bisa MengUpdate Ke Prefix Yang Sama`
-                    );
+                    return msg.channel.send(`Can't Update Same Prefix`);
                 }
 
                 const embed = new MessageEmbed()
@@ -48,9 +46,7 @@ module.exports = {
                 pref.prefix = args[0];
                 pref.member = member;
 
-                embed.setDescription(
-                    `Prefix Bot Telah DiUpdate Ke \`${args[0]}\``
-                );
+                embed.setDescription(`Prefix Bot Update To \`${args[0]}\``);
                 msg.channel.send(embed);
 
                 pref.save().catch((err) => console.log(err));

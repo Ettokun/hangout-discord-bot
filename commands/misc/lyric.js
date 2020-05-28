@@ -4,10 +4,10 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
     help: {
         name: "lyric",
-        description: "Bot akan mengirim lyric melalui DM",
+        description: "Bot will DM you and send The Lyrics of song",
         alias: ["lyrics"],
         category: "misc",
-        usage: "[Nama lagunya]",
+        usage: "[Song Name]",
         accessableby: "Member",
     },
     run: async (bot, msg, args) => {
@@ -16,9 +16,7 @@ module.exports = {
         let message = await msg.channel.send("Wait...");
 
         if (!lyric) {
-            message.delete();
-            msg.channel.send("**Masukan judul lagu!**");
-            return;
+            return message.edit("**Incude Song Title!**");
         } else {
             let lyrics = await solenno
                 .requestLyricsFor(lyric)
@@ -36,25 +34,63 @@ module.exports = {
             if (lyrics.length >= 2048) {
                 const lyrics1 = lyrics.slice(0, 2000);
                 const lyrics2 = lyrics.slice(2001);
+                const pages = [lyrics1, lyrics2];
+                let page = 1;
 
                 const embed = new MessageEmbed()
                     .setColor("#51a0b8")
                     .setTitle(`**${author} - ${title}**`)
-                    .setImage(icon);
-                const embed2 = new MessageEmbed().setColor("#51a0b8")
-                    .setDescription(`**Lyrics**
-                ${lyrics1.trimLeft()}`);
-                const embed3 = new MessageEmbed().setColor("#51a0b8")
-                    .setDescription(`**Lyrics**
-                ${lyrics2.trimLeft()}`);
+                    .setThumbnail(icon)
+                    .setDescription(`Lyrics\n${pages[page - 1]}`);
 
-                message
-                    .edit(`<@${msg.author.id}> Cek Dm kamu`)
-                    .then((message) => message.delete({ timeout: 30000 }));
+                msg.author.send(embed).then((m) => {
+                    message.delete();
+                    msg.channel.send(`<@${msg.author.id}>, See your Dm!`);
+                    m.react("⬅️").then((r) => {
+                        m.react("➡️");
 
-                msg.author.send(embed);
-                msg.author.send(embed2);
-                msg.author.send(embed3);
+                        const backwardsFilter = (react, user) =>
+                            react.emoji.name === `⬅️` &&
+                            user.id === msg.author.id;
+                        const forwardsFilter = (react, user) =>
+                            react.emoji.name === `➡️` &&
+                            user.id === msg.author.id;
+
+                        const backwards = m.createReactionCollector(
+                            backwardsFilter,
+                            { time: 60000 }
+                        );
+                        const forwards = m.createReactionCollector(
+                            forwardsFilter,
+                            {
+                                time: 60000,
+                            }
+                        );
+
+                        backwards.on("collect", (r) => {
+                            if (page === 1) return;
+                            page--;
+                            embed
+                                .setDescription(`Lyrics\n${pages[page - 1]}`)
+                                .setFooter(
+                                    `${bot.user.username} | lyrics | page ${page} of ${pages.length}`,
+                                    bot.user.displayAvatarURL()
+                                );
+                            m.edit(embed);
+                        });
+                        forwards.on("collect", (r) => {
+                            if (page === pages.length) return;
+                            page++;
+                            embed
+                                .setDescription(`Lyrics\n${pages[page - 1]}`)
+                                .setFooter(
+                                    `${bot.user.username} | Corona | page ${page} of ${pages.length}`,
+                                    bot.user.displayAvatarURL()
+                                );
+                            m.edit(embed);
+                        });
+                    });
+                });
             }
             if (lyrics.length < 2048) {
                 const embed = new MessageEmbed()
@@ -66,7 +102,7 @@ module.exports = {
                 ${lyrics.trimLeft()}`);
 
                 message
-                    .edit(`<@${msg.author.id}> Cek Dm kamu`)
+                    .edit(`<@${msg.author.id}>, See your Dm!`)
                     .then((message) => message.delete({ timeout: 10000 }));
                 msg.author.send(embed);
                 msg.author.send(embed2);

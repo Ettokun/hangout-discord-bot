@@ -5,7 +5,7 @@ const { getMember } = require("../../functions.js");
 module.exports = {
     help: {
         name: "level",
-        description: "Melihat Level user",
+        description: "See Level User",
         alias: ["levels", "lvl", "exp"],
         category: "info",
         usage: "",
@@ -24,7 +24,8 @@ module.exports = {
             (err, level) => {
                 if (err) throw err;
 
-                if (!level) return msg.channel.send(`Member Tidak Ada!`);
+                if (!level)
+                    return msg.channel.send(`(404) Member Not Found XD!`);
 
                 const lvlEmbed = new MessageEmbed()
                     .setColor("BLUE")
@@ -38,10 +39,10 @@ module.exports = {
                             level.xp
                         }**\n(perlu ${
                             level.nextLevel - level.xp
-                        } XP. Komonikasi dengan sesama agai dapat naik level`
+                        } XP to level up)`
                     )
                     .setFooter(
-                        `${bot.user.username} - Level System`,
+                        `${bot.user.username} | Level System`,
                         bot.user.displayAvatarURL()
                     );
 

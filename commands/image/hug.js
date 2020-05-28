@@ -11,7 +11,7 @@ const imgTOKEN = process.env.imgTOKEN;
 module.exports = {
     help: {
         name: "hug",
-        description: "Bot mengirim Gambar/gif hug",
+        description: "Bot Send Hug Image/gif",
         alias: "",
         category: "image",
         usage: "",
@@ -20,7 +20,7 @@ module.exports = {
     run: async (bot, msg, args) => {
         if (cooldown.has(msg.author.id)) {
             return msg.channel
-                .send(`Tunggu selama 5 detik untuk menggunakan comment`)
+                .send(`Wait 5 sec and try again`)
                 .then((msg) => msg.delete({ timeout: 4000 }));
         } else {
             cooldown.add(msg.author.id);
@@ -43,7 +43,7 @@ module.exports = {
                         msg.author.username,
                         msg.author.displayAvatarURL()
                     )
-                    .setTitle(`Jika Gambar tidak Muncul Click disini`)
+                    .setTitle(`Image Now show? Click here`)
                     .setURL(data.url)
                     .setImage(data.url)
                     .setFooter(

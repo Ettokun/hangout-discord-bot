@@ -3,11 +3,11 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
     help: {
         name: "invite",
-        descripsi: 'Invite bot Ke server',
+        descripsi: "Invite bot to your server",
         alias: ["inv", "toserver"],
         category: "misc",
         usage: "",
-        accessableby: "Member"
+        accessableby: "Member",
     },
     run: async (bot, msg, args) => {
         const embed = new MessageEmbed()
@@ -17,5 +17,5 @@ module.exports = {
             );
 
         msg.channel.send({ embed });
-    }
+    },
 };

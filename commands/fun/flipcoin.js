@@ -1,7 +1,7 @@
 module.exports = {
     help: {
         name: "flip",
-        description: "Permainan Flip a Coin",
+        description: "Flip a Coin Game",
         alias: "",
         category: "fun",
         usage: "",

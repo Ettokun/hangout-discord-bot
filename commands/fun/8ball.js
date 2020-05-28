@@ -1,7 +1,7 @@
 module.exports = {
     help: {
         name: "8ball",
-        description: "Permainan Mirip Kerang ajaib di Spongebob :)",
+        description: "Give Me question",
         alias: "",
         category: "fun",
         usage: "[pertanyaan]",
@@ -10,16 +10,15 @@ module.exports = {
     run: async (bot, msg, args) => {
         const pertanyaan = args.join(" ");
         const jawaban = [
-            "Mungkin",
-            "Iya",
-            "Tidak",
-            "Bisa jadi",
-            "Mungkin Iya",
-            "Mungkin Tidak",
-            "Tidak Keduanya",
+            "Maybe",
+            "Yes",
+            "No",
+            "Maybe Yes",
+            "Maybe No",
+            "Not Both",
         ];
 
-        if (!pertanyaan) return msg.channel.send(`Mohon Masukan pertanyaan`);
+        if (!pertanyaan) return msg.channel.send(`Give me a Question`);
 
         msg.reply(
             `${jawaban[Math.floor(Math.random() * jawaban.length)]}`

@@ -11,7 +11,7 @@ const imgTOKEN = process.env.imgTOKEN;
 module.exports = {
     help: {
         name: "cute",
-        description: "Bot mengirim Gambar/gif kiss",
+        description: "Bot send cute Image/gif",
         alias: ["cutes"],
         category: "image",
         usage: "",
@@ -43,9 +43,9 @@ module.exports = {
                         msg.author.username,
                         msg.author.displayAvatarURL()
                     )
-                    .setTitle(`Jika Gambar tidak Muncul Click disini`)
+                    .setTitle(`Image Not Found? Click Here`)
                     .setURL(data.source)
-                    .setDescription(`Kamu juga lucu KOK :kissing_heart:`)
+                    .setDescription(`You Cute too :kissing_heart:`)
                     .setImage(data.image_url)
                     .setFooter(
                         `${bot.user.username} | Cute`,

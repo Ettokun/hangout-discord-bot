@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
     help: {
         name: "rps",
-        description: "Permainan Rock, Paper, Scissors",
+        description: "Rock, Paper, Scissors games",
         alias: ["suit", "gbt"],
         category: "fun",
         usage: "[rock, paper, scissors]",
@@ -25,18 +25,18 @@ module.exports = {
             // algoritma permainan
             if (random === userChoise) {
                 return msg.channel.send(
-                    `${namaUser} Memilih **${userChoise.toUpperCase()}** dan ${namaBot} Memilih **${random.toUpperCase()}**\n Hasilnya Seri! | ketik >rps [pilihan]`
+                    `${namaUser} choose **${userChoise.toUpperCase()}** and ${namaBot} choose **${random.toUpperCase()}**\n Tie!`
                 );
             }
 
             if (userChoise === "rock") {
                 if (random === "scissors") {
                     return msg.channel.send(
-                        `${namaUser} Memilih **${userChoise.toUpperCase()}** dan ${namaBot} Memilih **${random.toUpperCase()}**\n ${namaUser} Menang! | ketik >rps [pilihan]`
+                        `${namaUser} choose **${userChoise.toUpperCase()}** and ${namaBot} choose **${random.toUpperCase()}**\n ${namaUser} win!`
                     );
                 } else {
                     return msg.channel.send(
-                        `${namaUser} Memilih **${userChoise.toUpperCase()}** dan ${namaBot} Memilih **${random.toUpperCase()}**\n ${namaBot} Menang! | ketik >rps [pilihan]`
+                        `${namaUser} choose **${userChoise.toUpperCase()}** and ${namaBot} choose **${random.toUpperCase()}**\n ${namaBot} win!`
                     );
                 }
             }
@@ -44,11 +44,11 @@ module.exports = {
             if (userChoise === "paper") {
                 if (random === "scissors") {
                     return msg.channel.send(
-                        `${namaUser} Memilih **${userChoise.toUpperCase()}** dan ${namaBot} Memilih **${random.toUpperCase()}**\n ${namaBot} Menang! | ketik >rps [pilihan]`
+                        `${namaUser} choose **${userChoise.toUpperCase()}** and ${namaBot} choose **${random.toUpperCase()}**\n ${namaBot} win!`
                     );
                 } else {
                     return msg.channel.send(
-                        `${namaUser} Memilih **${userChoise.toUpperCase()}** dan ${namaBot} Memilih **${random.toUpperCase()}**\n ${namaUser} Menang! | ketik >rps [pilihan]`
+                        `${namaUser} choose **${userChoise.toUpperCase()}** and ${namaBot} choose **${random.toUpperCase()}**\n ${namaUser} win!`
                     );
                 }
             }
@@ -56,11 +56,11 @@ module.exports = {
             if (userChoise === "scissors") {
                 if (random === "rock") {
                     return msg.channel.send(
-                        `${namaUser} Memilih **${userChoise.toUpperCase()}** dan ${namaBot} Memilih **${random.toUpperCase()}**\n ${namaBot} Menang!  | ketik >rps [pilihan]`
+                        `${namaUser} choose **${userChoise.toUpperCase()}** and ${namaBot} choose **${random.toUpperCase()}**\n ${namaBot} win! `
                     );
                 } else {
                     return msg.channel.send(
-                        `${namaUser} Memilih **${userChoise.toUpperCase()}** dan ${namaBot} Memilih **${random.toUpperCase()}**\n ${namaUser} Menang! | ketik >rps [pilihan]`
+                        `${namaUser} choose **${userChoise.toUpperCase()}** and ${namaBot} choose **${random.toUpperCase()}**\n ${namaUser} win!`
                     );
                 }
             }
@@ -70,7 +70,9 @@ module.exports = {
                 userChoise !== "rock" ||
                 userChoise !== "scissors"
             )
-                return msg.channel.send("Maaf, Pilihan mu tidak ada di list");
+                return msg.channel.send(
+                    "You must choose between Rock Paper Scissors"
+                );
         } else {
             const embed = new MessageEmbed()
                 .setColor("RANDOM")

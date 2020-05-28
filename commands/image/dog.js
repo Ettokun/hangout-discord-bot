@@ -4,7 +4,7 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
     help: {
         name: "dog",
-        description: "Memunculkan gambar anjing",
+        description: "Bot send dog Image",
         alias: ["dogge", "puppy"],
         category: "image",
         usage: "",
@@ -19,12 +19,12 @@ module.exports = {
             .then((res) => {
                 if (!res) {
                     msg.channel();
-                    msg.channel.send("Coba lagi!");
+                    msg.channel.send("try again!");
                     return;
                 }
                 if (res.status != "success") {
                     msg.delete();
-                    msg.channel.send("Api tidak Merespon Silakan coba lagi");
+                    msg.channel.send("Something Wrong!");
                     return;
                 }
 
@@ -33,10 +33,10 @@ module.exports = {
                         `${bot.user.username}`,
                         bot.user.displayAvatarURL()
                     )
-                    .setDescription(`Berhasil memuat Gambar!`)
+                    .setDescription(`This is it`)
                     .setImage(res.message)
                     .setFooter(
-                        `${bot.user.username} | Cari Gambar Lagi`,
+                        `${bot.user.username} | dog`,
                         bot.user.displayAvatarURL()
                     );
 

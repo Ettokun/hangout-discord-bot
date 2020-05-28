@@ -4,7 +4,7 @@ const snekFetch = require("snekfetch");
 module.exports = {
     help: {
         name: "meme",
-        description: "Memunculkan gambar Meme Secara random",
+        description: "Bot Send randomly meme image",
         alias: ["memes"],
         category: "image",
         usage: "",
@@ -26,8 +26,7 @@ module.exports = {
         ];
 
         let subreddit = reddit[Math.floor(Math.random() * reddit.length)];
-
-        msg.channel.startTyping();
+        const message = await msg.channel.send(`Please wait...`);
 
         randomPuppy(subreddit)
             .then((url) => {
@@ -43,9 +42,8 @@ module.exports = {
                                     },
                                 ],
                             })
-                            .then((m) => {
-                                msg.channel.stopTyping();
-                                msg.delete();
+                            .then(() => {
+                                message.delete();
                             });
                     })
                     .catch((err) => console.log(err));

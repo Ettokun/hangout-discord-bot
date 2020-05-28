@@ -13,7 +13,7 @@ module.exports = {
     run: async (bot, msg, args, prefix) => {
         if (args[0] === "help")
             return msg.channel.send(
-                `Pls masukan \`${prefix}help\` / \`${prefix}help (command Name)\` Saja!`
+                `Just do type\`${prefix}help\` / \`${prefix}help (command Name)\`!`
             );
 
         const theOwner = "@kevin_octavian_";
@@ -27,7 +27,7 @@ module.exports = {
             const categories = readdirSync("./commands/");
 
             embed.setDescription(
-                `These are the avaliable commands for ${msg.guild.me.displayName}\n\nThe bot prefix is **${prefix}**`
+                `These are the avaliable commands for ${msg.guild.me.displayName}\n\nThe bot prefix is **${prefix}**\n\n\nType ${prefix}help (command Name) to see Spesifi Command\n`
             );
             embed.setFooter(
                 `© ${msg.guild.me.displayName} | Total Command: ${bot.commands.size} | CreateBY: ${theOwner}`,
@@ -42,7 +42,7 @@ module.exports = {
                     category.slice(0, 1).toUpperCase() + category.slice(1);
                 try {
                     embed.addField(
-                        `+ ${capital} [${dir.size}]:`,
+                        `:point_right: ${capital} [${dir.size}]:`,
                         dir.map((c) => `\`${c.help.name}\``).join(", ")
                     );
                 } catch (r) {
@@ -58,9 +58,9 @@ module.exports = {
             if (!command)
                 return msg.channel.send(
                     embed
-                        .setTitle(`**Command Tidak Valid*`)
+                        .setTitle(`**Command Not Found**`)
                         .setDescription(
-                            `lakukan \`${prefix}help\` Untuk meliat list command`
+                            `type \`${prefix}help\`to see list command`
                         )
                         .setFooter(
                             `© ${msg.guild.me.displayName} | Total Command: ${bot.commands.size} | CreateBY: ${theOwner}`,
@@ -76,7 +76,7 @@ module.exports = {
                         command.name.slice(0, 1).toUpperCase() +
                         command.name.slice(1)
                     }\n**Description:** ${
-                        command.description || "Tidak ada Descripsi"
+                        command.description || "No Description"
                     }\n**Usage:** ${
                         command.usage
                             ? `\`${prefix}${command.name} ${command.usage}\``
@@ -87,7 +87,7 @@ module.exports = {
                         command.alias
                             ? `\`${command.alias.join(", ")}\``
                             : "None."
-                    }\n\n**Note:** jika menggunakan kurung () maka artinya itu opsional, jika menggunakan kurung siku [] maka wajib memasukan nilai!`
+                    }\n\n**Note:** () = opsional ,[] required value`
                 )
                 .setFooter(
                     `© ${msg.guild.me.displayName} | Total Command: ${bot.commands.size} | CreateBY: ${theOwner}`,

@@ -3,11 +3,11 @@ const { getMember } = require("../../functions");
 module.exports = {
     help: {
         name: "ban",
-        description: "MemBAN Member",
+        description: "Banned Member",
         alias: "",
         category: "moderator",
         usage: "[User] (Reason) (days)",
-        accessableby: "Moderator/Admin"
+        accessableby: "Moderator/Admin",
     },
 
     run: async (bot, msg, args) => {
@@ -16,23 +16,25 @@ module.exports = {
 
         if (!msg.member.hasPermission("MANAGE_CHANNEL"))
             return msg.channel
-                .send("Tidak memiliki izin")
-                .then(m => m.delete({ timeout: 10000 }));
+                .send("No Have Permission")
+                .then((m) => m.delete({ timeout: 10000 }));
         if (!args[0] || member === undefined)
             return msg.channel
-                .send("Masukan ``@user`` Untuk Melanjutkan")
-                .then(m => m.delete({ timeout: 10000 }));
+                .send("Mention `@user` to Ban his/her from the server")
+                .then((m) => m.delete({ timeout: 10000 }));
 
         const reason = args.join(" ").slice(22) || "NO REASON!";
 
         msg.guild
             .member(user)
-            .ban({ reason })
+            .ban({ day: 1, reason })
             .then(() =>
                 msg.channel
-                    .send(`<@${member.user.id}> Berhasil di Kick!`)
-                    .then(m => m.delete({ timeout: 10000 }))
+                    .send(
+                        `<@${member.user.id}> Get Kicked from ${msg.guild.name}!`
+                    )
+                    .then((m) => m.delete({ timeout: 10000 }))
             )
-            .catch(err => console.log(err));
-    }
+            .catch((err) => console.log(err));
+    },
 };

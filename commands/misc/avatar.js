@@ -4,10 +4,10 @@ const { getMember } = require("../../functions.js");
 module.exports = {
     help: {
         name: "avatar",
-        description: "Menampilkan Profile kamu atau member lain",
+        description: "Showing Your avatar Or another member",
         alias: ["profile"],
         category: "misc",
-        usage: "[mention member]",
+        usage: "(mention member)",
         accessableby: "Member",
     },
     run: async (bot, msg, args) => {

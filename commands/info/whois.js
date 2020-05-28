@@ -4,7 +4,7 @@ const { getMember } = require("../../functions.js");
 module.exports = {
     help: {
         name: "whois",
-        description: "memberitahu info member",
+        description: "give member guild Information",
         alias: ["memberinfo"],
         category: "info",
         usage: "(Mention Member)",

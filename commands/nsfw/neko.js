@@ -11,7 +11,7 @@ const imgTOKEN = process.env.imgTOKEN;
 module.exports = {
     help: {
         name: "neko",
-        description: "Bot mengirim Gambar/gif neko",
+        description: "Bot Will send neko Image/gif",
         alias: "",
         category: "nsfw",
         usage: "",
@@ -19,11 +19,11 @@ module.exports = {
     },
     run: async (bot, msg, args) => {
         if (!msg.channel.nsfw)
-            return msg.channel.send(`Kamu Harus Berada di NSFW Channel`);
+            return msg.channel.send(`You must in NSFW Channel`);
 
         if (cooldown.has(msg.author.id)) {
             return msg.channel
-                .send(`Tunggu selama 5 detik untuk menggunakan comment`)
+                .send(`Wait 5 sec and try again`)
                 .then((msg) => msg.delete({ timeout: 4000 }));
         } else {
             cooldown.add(msg.author.id);
@@ -47,7 +47,7 @@ module.exports = {
                         msg.author.username,
                         msg.author.displayAvatarURL()
                     )
-                    .setTitle(`Jika Gambar tidak Muncul Click disini`)
+                    .setTitle(`Image not Showing? Click Here`)
                     .setURL(data.url)
                     .setImage(data.url)
                     .setFooter(

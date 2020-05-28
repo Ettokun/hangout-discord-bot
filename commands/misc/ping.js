@@ -4,7 +4,7 @@ const client = new Client();
 module.exports = {
     help: {
         name: "ping",
-        description: "memastikan bot Online atau Offline",
+        description: "Testing bot Online or Offline ignore this",
         alias: "",
         category: "misc",
         usage: "",
