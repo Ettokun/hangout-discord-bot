@@ -5,10 +5,10 @@ const { dataCountry, dataCountry2 } = require("../../country.json");
 module.exports = {
     help: {
         name: "corona",
-        description: "Menampilkan Status covid-19 diDunia atau diDaerah",
+        description: "Showing Status covid-19 world or every country",
         alias: ["covid", "covid19"],
         category: "info",
-        usage: "(Masukan negara) / (ketik country untuk melihat semua negara)",
+        usage: "(Country name) / (type >corona country to see more country)",
         accessableby: "Member",
     },
     run: async (bot, msg, args, prefix) => {
@@ -49,7 +49,21 @@ module.exports = {
                     });
 
                     backwards.on("collect", (r) => {
-                        if (page === 1) return;
+                        if (page === 1) {
+                            const user = r.users.cache
+                                .filter((u) => !u.bot)
+                                .map((u) => u.id)[0];
+
+                            r.users.remove(user);
+                            return;
+                        }
+                        if (r.count > 1) {
+                            const user = r.users.cache
+                                .filter((u) => !u.bot)
+                                .map((u) => u.id)[0];
+
+                            r.users.remove(user);
+                        }
                         page--;
                         embed
                             .setDescription(
@@ -64,7 +78,21 @@ module.exports = {
                         m.edit(embed);
                     });
                     forwards.on("collect", (r) => {
-                        if (page === country.length) return;
+                        if (page === country.length) {
+                            const user = r.users.cache
+                                .filter((u) => !u.bot)
+                                .map((u) => u.id)[0];
+
+                            r.users.remove(user);
+                            return;
+                        }
+                        if (r.count > 1) {
+                            const user = r.users.cache
+                                .filter((u) => !u.bot)
+                                .map((u) => u.id)[0];
+
+                            r.users.remove(user);
+                        }
                         page++;
                         embed
                             .setDescription(

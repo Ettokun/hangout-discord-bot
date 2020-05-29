@@ -15,7 +15,13 @@ module.exports = (bot) => {
                 );
         }
     };
-    ["fun", "image", "info", "misc", "moderator", "nsfw"].forEach((x) =>
-        load(x)
-    );
+    [
+        "fun",
+        "image",
+        "info",
+        "misc",
+        "moderator",
+        "nsfw",
+        "roles",
+    ].forEach((x) => load(x));
 };

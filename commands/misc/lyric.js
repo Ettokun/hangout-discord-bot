@@ -68,7 +68,21 @@ module.exports = {
                         );
 
                         backwards.on("collect", (r) => {
-                            if (page === 1) return;
+                            if (page === 1) {
+                                const user = r.users.cache
+                                    .filter((u) => !u.bot)
+                                    .map((u) => u.id)[0];
+
+                                r.users.remove(user);
+                                return;
+                            }
+                            if (r.count > 1) {
+                                const user = r.users.cache
+                                    .filter((u) => !u.bot)
+                                    .map((u) => u.id)[0];
+
+                                r.users.remove(user);
+                            }
                             page--;
                             embed
                                 .setDescription(`Lyrics\n${pages[page - 1]}`)
@@ -79,7 +93,21 @@ module.exports = {
                             m.edit(embed);
                         });
                         forwards.on("collect", (r) => {
-                            if (page === pages.length) return;
+                            if (page === pages.length) {
+                                const user = r.users.cache
+                                    .filter((u) => !u.bot)
+                                    .map((u) => u.id)[0];
+
+                                r.users.remove(user);
+                                return;
+                            }
+                            if (r.count > 1) {
+                                const user = r.users.cache
+                                    .filter((u) => !u.bot)
+                                    .map((u) => u.id)[0];
+
+                                r.users.remove(user);
+                            }
                             page++;
                             embed
                                 .setDescription(`Lyrics\n${pages[page - 1]}`)

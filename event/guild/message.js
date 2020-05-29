@@ -7,6 +7,9 @@ const mongoose = require("mongoose");
 const levelSchema = require("../../model/level.js");
 const PrefixSchema = require("../../model/prefix.js");
 
+// externa fungsion
+const { getMember } = require("../../functions.js");
+
 // cofig env
 config({
     path: "D:\\discord\\hangout-discord-bot/.env",
@@ -119,19 +122,61 @@ module.exports = async (bot, msg) => {
 
             // mongoose end level
 
+            // mention the bot
+            const mention = msg.guild.member(msg.mentions.users.first());
+            if (mention) {
+                if (mention.user.id === "703427669605351434") {
+                    let arg = msg.content.trim().split(/ +/g);
+                    let cmd = !arg[1] ? undefined : arg[1].toLowerCase();
+
+                    if (cmd === "prefix") {
+                        return msg.channel.send(
+                            `Your guild prefix is \`${prefix}\``
+                        );
+                    }
+
+                    let command =
+                        (await bot.commands.get(cmd)) ||
+                        bot.commands.get(bot.alias.get(cmd));
+
+                    if (!command) {
+                        msg.channel
+                            .send(":x: **Sorry, Command not found!**")
+                            .then((m) => m.delete({ timeout: 10000 }));
+                        msg.delete();
+                        return;
+                    } else {
+                        // ceking jika member melakukan command
+                        if (cooldown.has(msg.author.id)) {
+                            return msg.channel
+                                .send(`Gunakan command Setelah 5 detik`)
+                                .then((m) => m.delete({ timeout: 5000 }));
+                        } else {
+                            cooldown.add(msg.author.id);
+
+                            setTimeout(() => {
+                                cooldown.delete(msg.author.id);
+                            }, 5000);
+
+                            command.run(bot, msg, args, prefix);
+                        }
+                    }
+                    return;
+                }
+            }
+
             // checking if user not using preifx
             if (!msg.content.startsWith(prefix)) return;
 
             // ceking jika member salah memasukan command
-            if (command === undefined) {
+            if (!command) {
                 msg.channel
                     .send(":x: **Sorry, Command not found!**")
                     .then((m) => m.delete({ timeout: 10000 }));
                 msg.delete();
                 return;
-            }
-            // ceking jika member melakukan command
-            if (command) {
+            } else {
+                // ceking jika member melakukan command
                 if (cooldown.has(msg.author.id)) {
                     return msg.channel
                         .send(`Gunakan command Setelah 5 detik`)

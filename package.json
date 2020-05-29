@@ -13,6 +13,7 @@
     "dotenv": "^8.2.0",
     "imgur": "^0.3.1",
     "mongoose": "^5.9.15",
+    "ms": "^2.1.2",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.3",
     "novelcovid": "^2.1.0",

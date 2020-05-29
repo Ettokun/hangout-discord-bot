@@ -1,4 +1,4 @@
-const { Client } = require("discord.js");
+const { Client, MessageEmbed } = require("discord.js");
 const client = new Client();
 
 module.exports = {
@@ -12,9 +12,26 @@ module.exports = {
     },
     run: async (bot, msg, args) => {
         let firstTime = Date.now();
-        msg.channel.send(`Pong!`).then((msg) => {
-            let endTime = Date.now();
-            msg.edit(`Pong ${endTime - firstTime}ms`);
-        });
+        msg.channel
+            .send(`Pong!`)
+
+            .then((message) => {
+                let endTime = Date.now();
+                const pingEmbed = new MessageEmbed()
+                    .setTitle("Result")
+                    .setDescription(
+                        `Pong! \`${endTime - firstTime}ms\`\nApi! \`${
+                            bot.ws.ping
+                        }ms\``
+                    )
+                    .setFooter(
+                        `${bot.user.username} | Ping | Today at ${new Date(
+                            msg.createdAt
+                        )
+                            .toTimeString()
+                            .slice(0, 8)}`
+                    );
+                message.edit(pingEmbed);
+            });
     },
 };
