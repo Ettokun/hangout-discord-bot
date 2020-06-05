@@ -4,6 +4,7 @@ module.exports = async (bot, oldMember, newMember) => {
     levelSchema.findOne(
         {
             userid: oldMember.id,
+            oldUsername: oldMember.username,
         },
         (err, level) => {
             if (err) console.log(err);

@@ -26,7 +26,7 @@ module.exports = {
 
         if (args[0] === "all") {
             if (!role) {
-                msg.channel.send(`Notthing Get muted`);
+                msg.channel.send(`Nothing Get muted`);
             } else {
                 role.delete().then(() =>
                     msg.channel.send("All member has UnMute")

@@ -43,9 +43,9 @@ module.exports = {
                     .setThumbnail(icon)
                     .setDescription(`Lyrics\n${pages[page - 1]}`);
 
-                msg.author.send(embed).then((m) => {
+                msg.channel.send(embed).then((m) => {
                     message.delete();
-                    msg.channel.send(`<@${msg.author.id}>, See your Dm!`);
+                    m.delete({ timeout: 60000 });
                     m.react("⬅️").then((r) => {
                         m.react("➡️");
 

@@ -1,7 +1,7 @@
 module.exports = {
     help: {
         name: "setnick",
-        description: "Memunculkan Semua Command pada bot",
+        description: "Set member nick",
         alias: ["changenick"],
         category: "moderator",
         usage: "[Mention Member] [new Nick]",

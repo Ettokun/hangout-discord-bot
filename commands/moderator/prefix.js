@@ -46,7 +46,9 @@ module.exports = {
                 pref.prefix = args[0];
                 pref.member = member;
 
-                embed.setDescription(`Prefix Bot Update To \`${args[0]}\``);
+                embed.setDescription(
+                    `Prefix Bot Update To \`${args[0]}\`\n\n**If you Forget, You can mention the bot to see Your guild Prefix**`
+                );
                 msg.channel.send(embed);
 
                 pref.save().catch((err) => console.log(err));

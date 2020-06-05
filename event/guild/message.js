@@ -40,6 +40,7 @@ module.exports = async (bot, msg) => {
     PrefixSchema.findOne(
         {
             guildID: msg.guild.id,
+            guildName: msg.guild.name,
         },
         async (err, pref) => {
             if (err) console.log(err);
@@ -49,7 +50,7 @@ module.exports = async (bot, msg) => {
                     guildName: msg.guild.name,
                     oldGuildName: msg.guild.name,
                     guildID: msg.guild.id,
-                    prefix: ">",
+                    prefix: "-",
                     member,
                 });
 
@@ -58,7 +59,7 @@ module.exports = async (bot, msg) => {
             }
 
             // bot prefix
-            const prefix = pref.prefix || ">";
+            const prefix = pref.prefix || "-";
 
             // making args
             let args = msg.content.slice(prefix.length).trim().split(/ +/g);
@@ -100,7 +101,7 @@ module.exports = async (bot, msg) => {
 
                         if (level.nextLevel <= level.xp) {
                             level.level = level.level + 1;
-                            level.nextLevel = level.level * 500;
+                            level.nextLevel = level.level * 500 * level.level;
                             const lvlEmbed = new MessageEmbed()
                                 .setColor("BLUE")
                                 .setAuthor(`${level.username}`, level.avatar)
@@ -119,50 +120,13 @@ module.exports = async (bot, msg) => {
                     }
                 }
             );
-
             // mongoose end level
 
             // mention the bot
-            const mention = msg.guild.member(msg.mentions.users.first());
-            if (mention) {
-                if (mention.user.id === "703427669605351434") {
-                    let arg = msg.content.trim().split(/ +/g);
-                    let cmd = !arg[1] ? undefined : arg[1].toLowerCase();
-
-                    if (cmd === "prefix") {
-                        return msg.channel.send(
-                            `Your guild prefix is \`${prefix}\``
-                        );
-                    }
-
-                    let command =
-                        (await bot.commands.get(cmd)) ||
-                        bot.commands.get(bot.alias.get(cmd));
-
-                    if (!command) {
-                        msg.channel
-                            .send(":x: **Sorry, Command not found!**")
-                            .then((m) => m.delete({ timeout: 10000 }));
-                        msg.delete();
-                        return;
-                    } else {
-                        // ceking jika member melakukan command
-                        if (cooldown.has(msg.author.id)) {
-                            return msg.channel
-                                .send(`Gunakan command Setelah 5 detik`)
-                                .then((m) => m.delete({ timeout: 5000 }));
-                        } else {
-                            cooldown.add(msg.author.id);
-
-                            setTimeout(() => {
-                                cooldown.delete(msg.author.id);
-                            }, 5000);
-
-                            command.run(bot, msg, args, prefix);
-                        }
-                    }
-                    return;
-                }
+            if (
+                msg.content.trim().split(/ +/g)[0] === "<@703427669605351434>"
+            ) {
+                return msg.channel.send(`Your guild prefix is \`${prefix}\``);
             }
 
             // checking if user not using preifx
@@ -179,7 +143,7 @@ module.exports = async (bot, msg) => {
                 // ceking jika member melakukan command
                 if (cooldown.has(msg.author.id)) {
                     return msg.channel
-                        .send(`Gunakan command Setelah 5 detik`)
+                        .send(`Use Command After 5 sec`)
                         .then((m) => m.delete({ timeout: 5000 }));
                 } else {
                     cooldown.add(msg.author.id);

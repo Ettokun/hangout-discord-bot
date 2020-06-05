@@ -40,18 +40,13 @@ module.exports = {
                     msg.guild.channels.cache
                         .map((channel, id) => channel)
                         .forEach((channel) => {
-                            channel.overwritePermissions([
-                                {
-                                    id: role.id,
-                                    deny: [
-                                        "SEND_MESSAGES",
-                                        "ADD_REACTIONS",
-                                        "SPEAK",
-                                        "CONNECT",
-                                        "ATTACH_FILES",
-                                    ],
-                                },
-                            ]);
+                            channel.createOverwrite(role.id, {
+                                SEND_MESSAGES: false,
+                                ADD_REACTIONS: false,
+                                SPEAK: false,
+                                CONNECT: false,
+                                ATTACH_FILES: false,
+                            });
                         });
 
                     member.roles.add(role.id);
@@ -64,18 +59,13 @@ module.exports = {
                 msg.guild.channels.cache
                     .map((channel, id) => channel)
                     .forEach((channel) => {
-                        channel.overwritePermissions([
-                            {
-                                id: role.id,
-                                deny: [
-                                    "SEND_MESSAGES",
-                                    "ADD_REACTIONS",
-                                    "SPEAK",
-                                    "CONNECT",
-                                    "ATTACH_FILES",
-                                ],
-                            },
-                        ]);
+                        channel.createOverwrite(role.id, {
+                            SEND_MESSAGES: false,
+                            ADD_REACTIONS: false,
+                            SPEAK: false,
+                            CONNECT: false,
+                            ATTACH_FILES: false,
+                        });
                     });
 
                 member.roles

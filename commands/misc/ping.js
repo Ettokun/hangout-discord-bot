@@ -20,9 +20,9 @@ module.exports = {
                 const pingEmbed = new MessageEmbed()
                     .setTitle("Result")
                     .setDescription(
-                        `Pong! \`${endTime - firstTime}ms\`\nApi! \`${
-                            bot.ws.ping
-                        }ms\``
+                        `Pong!:ping_pong: \`${
+                            endTime - firstTime
+                        }ms\`\nApi!:fire: \`${bot.ws.ping}ms\``
                     )
                     .setFooter(
                         `${bot.user.username} | Ping | Today at ${new Date(

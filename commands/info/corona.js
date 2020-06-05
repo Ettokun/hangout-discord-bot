@@ -151,13 +151,13 @@ module.exports = {
                             true
                         )
                         .addField(
-                            ":mask:**Today Recovered:**",
-                            `${data.active} Recovered`,
+                            ":skull:**Today Deaths:**",
+                            `${data.todayDeaths} deaths`,
                             true
                         )
                         .addField(
-                            ":skull:**Today Deaths:**",
-                            `${data.todayDeaths} deaths`,
+                            ":mask:**Active:**",
+                            `${data.active} Active`,
                             true
                         )
                         .setFooter(
@@ -221,13 +221,13 @@ module.exports = {
                             true
                         )
                         .addField(
-                            ":mask:**Today Recovered:**",
-                            `${data.active} Recovered`,
+                            ":skull:**Today Deaths:**",
+                            `${data.todayDeaths} deaths`,
                             true
                         )
                         .addField(
-                            ":skull:**Today Deaths:**",
-                            `${data.todayDeaths} deaths`,
+                            ":mask:**Active:**",
+                            `${data.active} Active`,
                             true
                         )
                         .setFooter(
