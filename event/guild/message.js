@@ -73,7 +73,7 @@ module.exports = async (bot, msg) => {
             // mongoose startmongoose level
             let expAdd = Math.floor(Math.random() * 7) + 8;
 
-            let nextlvl;
+            let nextlvl = 500;
 
             levelSchema.findOne(
                 {
