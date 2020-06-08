@@ -16,3 +16,4 @@ Hangout bot make your Discord server more Interactive
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
+.
