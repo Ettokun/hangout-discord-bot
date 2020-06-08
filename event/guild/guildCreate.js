@@ -14,7 +14,7 @@ module.exports = async (bot, guild) => {
                 const newPrefix = new prefix({
                     guildName: guild.name,
                     guildID: guild.id,
-                    prefix: ">",
+                    prefix: "-",
                     member,
                 });
 
