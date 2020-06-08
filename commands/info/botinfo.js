@@ -38,9 +38,9 @@ module.exports = {
             )
             .addField(`**Library**`, "discord.js", true)
             .addField(`**Version**`, "1.0.0", true)
-            .addField(`**Suport Bot**`, "https://bit.ly/2MyFANq", true)
+            .addField(`**Suport Bot**`, "https://bit.ly/2zattmq", true)
             .addField(`**Suport Server**`, "https://discord.gg/DpKFqV4", true)
-            .addField(`**Invite**`, "https://bit.ly/2MyFANq", true)
+            .addField(`**Invite**`, "https://bit.ly/2zattmq", true)
             .setFooter(
                 `${bot.user.username} | Bot Info`,
                 bot.user.displayAvatarURL()
