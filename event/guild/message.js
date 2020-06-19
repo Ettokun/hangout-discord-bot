@@ -75,7 +75,7 @@ module.exports = async (bot, msg) => {
 
             let nextlvl = 500;
 
-            levelSchema.findOne(
+            /*levelSchema.findOne(
                 {
                     userid: msg.author.id,
                     guildid: msg.guild.id,
@@ -119,7 +119,7 @@ module.exports = async (bot, msg) => {
                         level.save().catch((err) => console.log(err));
                     }
                 }
-            );
+            );*/
             // mongoose end level
 
             // mention the bot
