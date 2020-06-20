@@ -15,6 +15,7 @@ const PrefixSchema = new mongoose.Schema({
         auto: false,
         nickname: String,
     },
+    levelSytem: Boolean,
 });
 
 module.exports = mongoose.model("guildPrefix", PrefixSchema);

@@ -12,26 +12,23 @@ module.exports = {
     },
     run: async (bot, msg, args) => {
         let firstTime = Date.now();
-        msg.channel
-            .send(`Pong!`)
-
-            .then((message) => {
-                let endTime = Date.now();
-                const pingEmbed = new MessageEmbed()
-                    .setTitle("Result")
-                    .setDescription(
-                        `Pong!:ping_pong: \`${
-                            endTime - firstTime
-                        }ms\`\nApi!:fire: \`${bot.ws.ping}ms\``
+        msg.channel.send(`Pong!`).then((message) => {
+            let endTime = Date.now();
+            const pingEmbed = new MessageEmbed()
+                .setTitle("Result")
+                .setDescription(
+                    `Pong! :ping_pong: \`${
+                        endTime - firstTime
+                    }ms\`\nHeartbeat! :heartbeat: \`${bot.ws.ping}ms\``
+                )
+                .setFooter(
+                    `${bot.user.username} | Ping | Today at ${new Date(
+                        msg.createdAt
                     )
-                    .setFooter(
-                        `${bot.user.username} | Ping | Today at ${new Date(
-                            msg.createdAt
-                        )
-                            .toTimeString()
-                            .slice(0, 8)}`
-                    );
-                message.edit(pingEmbed);
-            });
+                        .toTimeString()
+                        .slice(0, 8)}`
+                );
+            message.edit(pingEmbed);
+        });
     },
 };

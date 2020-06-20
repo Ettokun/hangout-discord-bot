@@ -14,7 +14,7 @@ module.exports = {
         const user = msg.mentions.users.first();
         const member = msg.guild.member(user);
 
-        if (!msg.member.hasPermission("MANAGE_CHANNEL"))
+        if (!msg.member.hasPermission("MANAGE_CHANNELS"))
             return msg.channel
                 .send("No Have Permission")
                 .then((m) => m.delete({ timeout: 10000 }));

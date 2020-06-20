@@ -16,6 +16,7 @@ module.exports = async (bot, guild) => {
                     guildID: guild.id,
                     prefix: "-",
                     member,
+                    levelSytem: true,
                 });
 
                 newPrefix.save().catch((err) => console.log(err));

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const LevelSchema = new mongoose.Schema({
+    levelSytem: Boolean,
     guildid: String,
     username: String,
     oldUsername: String,

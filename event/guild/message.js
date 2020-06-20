@@ -52,6 +52,7 @@ module.exports = async (bot, msg) => {
                     guildID: msg.guild.id,
                     prefix: "-",
                     member,
+                    levelSytem: true,
                 });
 
                 newPrefix.save().catch((err) => console.log(err));
@@ -74,59 +75,72 @@ module.exports = async (bot, msg) => {
             let expAdd = Math.floor(Math.random() * 7) + 8;
 
             let nextlvl = 500;
+            if (pref.levelSytem) {
+                levelSchema.findOne(
+                    {
+                        userid: msg.author.id,
+                        guildid: msg.guild.id,
+                    },
+                    (err, level) => {
+                        if (err) console.log(err);
 
-            /*levelSchema.findOne(
-                {
-                    userid: msg.author.id,
-                    guildid: msg.guild.id,
-                },
-                (err, level) => {
-                    if (err) console.log(err);
+                        if (!level) {
+                            const newLevel = new levelSchema({
+                                guildid: msg.guild.id,
+                                username: msg.author.username,
+                                oldUsername: msg.author.username,
+                                userid: msg.author.id,
+                                xp: expAdd,
+                                level: 1,
+                                nextLevel: nextlvl,
+                                avatar: msg.author.displayAvatarURL(),
+                            });
 
-                    if (!level) {
-                        const newLevel = new levelSchema({
-                            guildid: msg.guild.id,
-                            username: msg.author.username,
-                            oldUsername: msg.author.username,
-                            userid: msg.author.id,
-                            xp: expAdd,
-                            level: 1,
-                            nextLevel: nextlvl,
-                            avatar: msg.author.displayAvatarURL(),
-                        });
+                            newLevel.save().catch((err) => console.log(err));
+                        } else {
+                            level.xp = level.xp + expAdd;
 
-                        newLevel.save().catch((err) => console.log(err));
-                    } else {
-                        level.xp = level.xp + expAdd;
+                            if (level.nextLevel <= level.xp) {
+                                level.level = level.level + 1;
+                                level.nextLevel =
+                                    level.level * 500 * level.level;
+                                const lvlEmbed = new MessageEmbed()
+                                    .setColor("BLUE")
+                                    .setAuthor(
+                                        `${level.username}`,
+                                        level.avatar
+                                    )
+                                    .setDescription(
+                                        `<@${level.userid}> telah naik level ke level ${level.level}`
+                                    )
+                                    .setFooter(
+                                        `${bot.user.username} - Level System`,
+                                        bot.user.displayAvatarURL()
+                                    );
 
-                        if (level.nextLevel <= level.xp) {
-                            level.level = level.level + 1;
-                            level.nextLevel = level.level * 500 * level.level;
-                            const lvlEmbed = new MessageEmbed()
-                                .setColor("BLUE")
-                                .setAuthor(`${level.username}`, level.avatar)
-                                .setDescription(
-                                    `<@${level.userid}> telah naik level ke level ${level.level}`
-                                )
-                                .setFooter(
-                                    `${bot.user.username} - Level System`,
-                                    bot.user.displayAvatarURL()
-                                );
+                                msg.channel.send(lvlEmbed);
+                            }
 
-                            msg.channel.send(lvlEmbed);
+                            level.save().catch((err) => console.log(err));
                         }
-
-                        level.save().catch((err) => console.log(err));
                     }
-                }
-            );*/
-            // mongoose end level
-
+                );
+                // mongoose end level
+            }
             // mention the bot
             if (
                 msg.content.trim().split(/ +/g)[0] === "<@703427669605351434>"
             ) {
-                return msg.channel.send(`Your guild prefix is \`${prefix}\``);
+                const embed = new MessageEmbed()
+                    .setAuthor(msg.guild.name, msg.guild.iconURL())
+                    .setDescription(
+                        `This Guild Prefix is: \`${prefix}\`\nYou can Type \`${prefix}help\` To see All Command`
+                    )
+                    .setFooter(
+                        `${bot.user.username} | Createby: **HAVINGFUN#8812**`,
+                        bot.user.displayAvatarURL({ size: 512 })
+                    );
+                return msg.channel.send(` \`${prefix}\``);
             }
 
             // checking if user not using preifx
