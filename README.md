@@ -1,3 +1,5 @@
+[![Discord Bots](https://top.gg/api/widget/703427669605351434.svg)](https://top.gg/bot/703427669605351434)
+
 # Hangout Disocrd Bot
 
 Hangout bot make your Discord server more Interactive 
