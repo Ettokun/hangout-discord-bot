@@ -140,7 +140,7 @@ module.exports = async (bot, msg) => {
                         `${bot.user.username} | Createby: **HAVINGFUN#8812**`,
                         bot.user.displayAvatarURL({ size: 512 })
                     );
-                return msg.channel.send(` \`${prefix}\``);
+                return msg.channel.send(embed);
             }
 
             // checking if user not using preifx
