@@ -22,7 +22,7 @@ module.exports = {
                 member.user.avatarURL()
             )
             .setDescription(`**${member.nickname || member.user.username}**`)
-            .setImage(member.user.avatarURL());
+            .setImage(member.user.displayAvatarURL({format: "png",size: 4096}));
         msg.channel.send(embed);
     },
 };
