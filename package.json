@@ -9,12 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dblapi.js": "^2.4.0",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "mongoose": "^5.9.15",
     "ms": "^2.1.2",
     "node-fetch": "^2.6.0",
-    "nodemon": "^2.0.3",
     "novelcovid": "^2.1.0",
     "random-puppy": "^1.1.0",
     "snekfetch": "^4.0.4",

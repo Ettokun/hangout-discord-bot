@@ -137,7 +137,7 @@ module.exports = async (bot, msg) => {
                         `This Guild Prefix is: \`${prefix}\`\nYou can Type \`${prefix}help\` To see All Command`
                     )
                     .setFooter(
-                        `${bot.user.username} | Createby: **HAVINGFUN#8812**`,
+                        `${bot.user.username} | Createby: HAVINGFUN#8812`,
                         bot.user.displayAvatarURL({ size: 512 })
                     );
                 return msg.channel.send(embed);
