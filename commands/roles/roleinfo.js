@@ -38,7 +38,7 @@ module.exports = {
                 )
                 .addField("**Hoisted:**", `${role.hoist ? "Yes" : "No"}`, true)
                 .addField("**Position:**", role.position, true)
-                .addField("**Who have:**", member, true)
+                .addField("**Who have:**", member ? member : "NONE", true)
                 .setFooter(
                     `${bot.user.username} | RoleInfo`,
                     bot.user.displayAvatarURL()

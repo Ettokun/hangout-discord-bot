@@ -19,4 +19,43 @@ module.exports = {
 
         return target;
     },
+    dateNow: (msg, hours = false) => {
+        if (!msg) throw "Missing Message";
+
+        let getHour = new Date(msg.createdAt).getHours();
+        let getMenit = new Date(msg.createdAt).getMinutes();
+        let amPM = getHour < 12 ? "AM" : "PM";
+        let clock;
+
+        if (hours) {
+            clock = new Date(msg.createdAt).toTimeString().slice(0, 5);
+        } else {
+            getHour = getHour > 12 ? getHour - 12 : getHour;
+            getHour = ("0" + getHour).slice(-2);
+            clock = `${getHour}:${getMenit} ${amPM}`;
+        }
+
+        return clock;
+    },
+    upTimer: (ms, sort = true) => {
+        const sec = Math.floor((ms / 1000) % 60).toString();
+        const min = Math.floor((ms / (1000 * 60)) % 60).toString();
+        const hrs = Math.floor((ms / (1000 * 60 * 60)) % 60).toString();
+        const day = Math.floor((ms / (1000 * 60 * 60 * 24)) % 60).toString();
+
+        if (sort) {
+            return `${day.padStart(1, "0")} Days, ${hrs.padStart(
+                2,
+                "0"
+            )} Hours, ${min.padStart(2, "0")} Minutes, ${sec.padStart(
+                2,
+                "0"
+            )} Seconds`;
+        } else {
+            return `${day.padStart(1, "0")}d ${hrs.padStart(
+                2,
+                "0"
+            )}h ${min.padStart(2, "0")}m ${sec.padStart(2, "0")}s`;
+        }
+    },
 };

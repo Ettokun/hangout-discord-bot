@@ -27,7 +27,7 @@ module.exports = {
             const categories = readdirSync("./commands/");
 
             embed.setDescription(
-                `These are the avaliable commands for ${msg.guild.me.displayName}\n\nThe bot prefix is **${prefix}**\n\n\nType ${prefix}help (command Name) to see Spesifi Command\n`
+                `These are the avaliable commands for ${msg.guild.me.displayName}\n\nThe bot prefix is **${prefix}**\n\n\nType ${prefix}help (command Name) to see Spesific Command\n`
             );
             embed.setFooter(
                 `© ${msg.guild.me.displayName} | Total Command: ${bot.commands.size} | CreateBY: ${theOwner}`,
@@ -87,7 +87,7 @@ module.exports = {
                         command.alias
                             ? `\`${command.alias.join(", ")}\``
                             : "None."
-                    }\n\n**Note:** () = opsional ,[] required value`
+                    }\n\n**Note:** () = Optional ,[] Required`
                 )
                 .setFooter(
                     `© ${msg.guild.me.displayName} | Total Command: ${bot.commands.size} | CreateBY: ${theOwner}`,

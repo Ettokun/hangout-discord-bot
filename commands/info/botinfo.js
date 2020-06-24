@@ -1,22 +1,24 @@
 const { MessageEmbed } = require("discord.js");
-const ms = require("ms");
+const { dateNow, upTimer } = require("../../functions");
 
 module.exports = {
     help: {
         name: "botinfo",
         description: "Give Bot Information",
-        alias: ["binfo"],
+        alias: ["binfo", "stats"],
         category: "info",
         usage: "",
         accessableby: "Member",
     },
     run: async (bot, msg, args, prefix) => {
-        const date = new Date(bot.user.createdAt).toDateString();
-        const time = new Date(bot.user.createdAt).toTimeString().slice(0, 8);
+        const create = new Date(bot.user.createdAt);
+
+        const date = create.toDateString();
+        const time = create.toLocaleTimeString();
 
         const owner =
             msg.guild.ownerID === "348651859646349316"
-                ? `**${msg.guild.owner}#${msg.guild.owner.user.discriminator}**`
+                ? `${msg.guild.owner.user.tag}`
                 : "HAVEFUN#8812";
 
         const embed = new MessageEmbed()
@@ -29,20 +31,26 @@ module.exports = {
             .addField(`**CreateAt**`, `${date} ${time}`, true)
             .addField(`**Server**`, bot.guilds.cache.size, true)
             .addField(`**User**`, bot.users.cache.size, true)
+            .addField(`**Uptime**`, `${upTimer(bot.uptime, false)}`, true)
+            .addField(`**Library**`, "discord.js", true)
+            .addField(`**Version**`, "1.1.2", true)
             .addField(
-                `**Uptime**`,
-                ms(bot.uptime, {
-                    long: false,
-                }),
+                `**Suport Bot**`,
+                `[VOTE](https://top.gg/bot/703427669605351434/vote)\n[DONATE](https://donatebot.io/checkout/581790531097722880)`,
                 true
             )
-            .addField(`**Library**`, "discord.js", true)
-            .addField(`**Version**`, "1.0.0", true)
-            .addField(`**Suport Bot**`, "https://bit.ly/2zattmq", true)
-            .addField(`**Suport Server**`, "https://discord.gg/DpKFqV4", true)
-            .addField(`**Invite**`, "https://bit.ly/2zattmq", true)
+            .addField(
+                `**Suport Server**`,
+                `[SUPORT SERVER](https://discord.gg/DpKFqV4)`,
+                true
+            )
+            .addField(`**Invite**`, `[INVITE](https://bit.ly/2zattmq)`, true)
+            .setImage(`https://top.gg/api/widget/703427669605351434.png`)
             .setFooter(
-                `${bot.user.username} | Bot Info`,
+                `${bot.user.username} | Bot Info | Today At ${dateNow(
+                    msg,
+                    false
+                )}`,
                 bot.user.displayAvatarURL()
             );
 

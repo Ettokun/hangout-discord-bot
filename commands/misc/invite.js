@@ -13,7 +13,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setColor("BLUE")
             .setDescription(
-                `:ballot_box_with_check: **Invite ${bot.user.username}** to Your Discord server: https://bit.ly/2zattmq`
+                `:ballot_box_with_check: **Invite ${bot.user.username}** to Your Discord server: [INVITE](https://bit.ly/2zattmq)`
             );
 
         msg.channel.send({ embed });

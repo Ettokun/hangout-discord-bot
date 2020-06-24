@@ -11,7 +11,7 @@ module.exports = {
         accessableby: "Member",
     },
     run: async (bot, msg, args, prefix) => {
-        return msg.channel.send("config sedang develop");
+        return msg.channel.send("Config is Disable");
         if (
             msg.author.id !== "348651859646349316" ||
             !msg.member.hasPermission("MANAGE_SERVER")

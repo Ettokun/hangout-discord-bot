@@ -4,9 +4,9 @@ module.exports = {
     help: {
         name: "tempmute",
         description: "Muted member in Guild",
-        alias: ["tmute"],
+        alias: ["tmute", "mute"],
         category: "moderator",
-        usage: "[mention user] [How Long]",
+        usage: "[mention user] [How Long] [reason]",
         accessableby: "Member",
     },
     run: async (bot, msg, args, prefix) => {
@@ -58,12 +58,15 @@ module.exports = {
                         });
 
                     member.roles.add(role.id).then(() => {
-                        msg.channel.send(
-                            `${member.user.username} has been Muted! ${ms(
-                                ms(args[1]),
-                                { long: true }
-                            )}`
-                        );
+                        msg.channel
+                            .send(
+                                `${
+                                    member.user.username
+                                } has been Muted! ${ms(ms(args[1]), {
+                                    long: true,
+                                })}`
+                            )
+                            .catch((err) => console.log(err));
                         setTimeout(() => {
                             if (!member.roles.cache.has(role.id)) {
                                 return;

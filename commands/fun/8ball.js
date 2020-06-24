@@ -20,11 +20,6 @@ module.exports = {
 
         if (!pertanyaan) return msg.channel.send(`Give me a Question`);
 
-        msg.reply(
-            `${jawaban[Math.floor(Math.random() * jawaban.length)]}`
-        ).then((m) => {
-            m.delete({ timeout: 30000 });
-            msg.delete({ timeout: 30000 });
-        });
+        msg.reply(`${jawaban[Math.floor(Math.random() * jawaban.length)]}`);
     },
 };

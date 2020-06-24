@@ -36,7 +36,7 @@ module.exports = {
                 }
 
                 if (args[0] === newPrefix) {
-                    return msg.channel.send(`Can't Update Same Prefix`);
+                    return msg.channel.send(`My Prefix Already ${newPrefix}`);
                 }
 
                 const embed = new MessageEmbed()

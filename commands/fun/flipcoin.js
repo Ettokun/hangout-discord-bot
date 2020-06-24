@@ -11,6 +11,6 @@ module.exports = {
         const coin = ["Heads", "tails"];
         const random = coin[Math.floor(Math.random() * coin.length)];
 
-        msg.reply(`${random}`).then((m) => m.delete({ timeout: 20000 }));
+        msg.reply(`${random}`);
     },
 };

@@ -1,4 +1,4 @@
-const ms = require("ms");
+const { upTimer } = require("../../functions");
 
 module.exports = {
     help: {
@@ -10,6 +10,6 @@ module.exports = {
         accessableby: "Member",
     },
     run: async (bot, msg, args, prefix) => {
-        msg.channel.send(`My Uptime:\n${ms(bot.uptime, { long: true })}`);
+        msg.channel.send(`My Uptime:\n${upTimer(bot.uptime, true)}`);
     },
 };

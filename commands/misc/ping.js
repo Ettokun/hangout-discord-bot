@@ -1,4 +1,5 @@
 const { Client, MessageEmbed } = require("discord.js");
+const { dateNow } = require("../../functions");
 const client = new Client();
 
 module.exports = {
@@ -22,11 +23,10 @@ module.exports = {
                     }ms\`\nHeartbeat! :heartbeat: \`${bot.ws.ping}ms\``
                 )
                 .setFooter(
-                    `${bot.user.username} | Ping | Today at ${new Date(
-                        msg.createdAt
-                    )
-                        .toTimeString()
-                        .slice(0, 8)}`
+                    `${bot.user.username} | Ping | Today at ${dateNow(
+                        msg,
+                        false
+                    )}`
                 );
             message.edit(pingEmbed);
         });

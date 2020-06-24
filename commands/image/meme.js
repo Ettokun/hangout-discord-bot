@@ -1,5 +1,11 @@
-const randomPuppy = require("random-puppy");
-const snekFetch = require("snekfetch");
+const { MessageEmbed } = require("discord.js");
+const fetch = require("node-fetch");
+const { config } = require("dotenv");
+
+config({
+    path: "D:\\discord\\hangout-discord-bot/.env",
+});
+const imgTOKEN = process.env.imgTOKEN;
 
 module.exports = {
     help: {
@@ -11,42 +17,33 @@ module.exports = {
         accessableby: "Member",
     },
     run: async (bot, msg, args) => {
-        let reddit = [
-            "meme",
-            "AnimeFunny",
-            "animemes",
-            "meiril",
-            "me_irl",
-            "MemeEconomy",
-            "dankmeme",
-            "dankmemes",
-            "AdviceAnimals",
-            "2meirl4meirl",
-            "MemesOfAnime",
-        ];
-
-        let subreddit = reddit[Math.floor(Math.random() * reddit.length)];
-        const message = await msg.channel.send(`Please wait...`);
-
-        randomPuppy(subreddit)
-            .then((url) => {
-                snekFetch
-                    .get(url)
-                    .then(async (res) => {
-                        await msg.channel
-                            .send({
-                                files: [
-                                    {
-                                        attachment: res.body,
-                                        name: "meme.png",
-                                    },
-                                ],
-                            })
-                            .then(() => {
-                                message.delete();
-                            });
-                    })
-                    .catch((err) => console.log(err));
+        const loading = await msg.channel.send(
+            `:hourglass_flowing_sand: Loading...!`
+        );
+        fetch(`https://api.ksoft.si/images/random-meme`, {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `${imgTOKEN}`,
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                const embed = new MessageEmbed()
+                    .setAuthor(
+                        msg.author.username,
+                        msg.author.displayAvatarURL()
+                    )
+                    .setTitle(`Image Now Showing? Click Here`)
+                    .setURL(data.source)
+                    .setDescription(`**${data.title}**`)
+                    .setImage(data.image_url)
+                    .setFooter(
+                        `${bot.user.username} | Meme`,
+                        bot.user.displayAvatarURL()
+                    );
+                loading.delete();
+                msg.channel.send(embed);
             })
             .catch((err) => console.log(err));
     },
