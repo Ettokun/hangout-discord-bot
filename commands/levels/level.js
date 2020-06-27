@@ -7,22 +7,22 @@ module.exports = {
         name: "level",
         description: "See Level User",
         alias: ["levels", "lvl", "exp"],
-        category: "info",
+        category: "levels",
         usage: "",
         accessableby: "Member",
     },
     run: async (bot, msg, args) => {
         const member = getMember(msg, args.join(" "));
 
-        const mention = !member ? msg.author.id : member.user.id;
+        const mention = !member ? msg.author : member.user;
 
         levelSchema.findOne(
             {
-                userid: mention,
+                userid: mention.id,
                 guildid: msg.guild.id,
             },
             (err, level) => {
-                if (err) throw err;
+                if (err) console.log(err);
 
                 if (!level)
                     return msg.channel.send(`(404) Member Not Found XD!`);
@@ -31,13 +31,13 @@ module.exports = {
                     .setColor("BLUE")
                     .setAuthor(
                         `${level.username}#${member.user.discriminator}`,
-                        level.avatar
+                        mention.displayAvatarURL({ format: "png" })
                     )
-                    .setThumbnail(level.avatar)
+                    .setThumbnail(mention.displayAvatarURL({ format: "png" }))
                     .setDescription(
                         `Level: **${level.level}**\nTotal Xp: **${
                             level.xp
-                        }**\n(perlu ${
+                        }**\n(Need ${
                             level.nextLevel - level.xp
                         } XP to level up)`
                     )

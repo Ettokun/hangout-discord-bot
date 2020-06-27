@@ -1,4 +1,4 @@
-const prefix = require("../../model/prefix");
+const prefix = require("../../model/guild.js");
 
 module.exports = async (bot, guild) => {
     const member = guild.members.cache.filter((m) => !m.user.bot).size;

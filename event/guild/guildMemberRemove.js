@@ -9,29 +9,23 @@ module.exports = async (bot, member) => {
         (err, guild) => {
             if (err) console.log(err);
 
-            const { Auto_Assign_Role } = guild.configGuild.Roles;
             const {
-                Welcome_Channel,
+                Leave_Channel,
                 Member_Count_Channel,
             } = guild.configGuild.Channel;
-            const { Welcome } = guild.configGuild.Custome_Message;
+            const { Leave } = guild.configGuild.Custome_Message;
 
-            const role = member.guild.roles.cache.find(
-                (role) => role.id === Auto_Assign_Role
-            );
             const channel = member.guild.channels.cache.find(
-                (channel) => channel.id === Welcome_Channel
+                (channel) => channel.id === Leave_Channel
             );
             const memberCount = member.guild.channels.cache.find(
                 (channel) => channel.id === Member_Count_Channel
             );
 
-            if (role) {
-                member.roles.add(role.id);
-            }
-
             if (channel) {
-                channel.send(customMessage(bot, member, Welcome, false));
+                channel.send(
+                    customMessage(bot, member, Leave, false, member.user.tag)
+                );
             }
 
             if (memberCount) {

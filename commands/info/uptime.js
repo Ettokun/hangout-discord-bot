@@ -4,7 +4,7 @@ module.exports = {
     help: {
         name: "uptime",
         description: "uptime of bot",
-        alias: "",
+        alias: ["up"],
         category: "info",
         usage: "",
         accessableby: "Member",

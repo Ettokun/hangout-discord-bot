@@ -5,10 +5,11 @@ const mongoose = require("mongoose");
 
 // file require
 const levelSchema = require("../../model/level.js");
-const PrefixSchema = require("../../model/prefix.js");
+const PrefixSchema = require("../../model/guild.js");
+const { customMessage } = require("../../functions");
 
 // externa fungsion
-const { getMember } = require("../../functions.js");
+const { dateNow } = require("../../functions.js");
 
 // cofig env
 config({
@@ -16,16 +17,6 @@ config({
 });
 
 // prefix
-const database = process.env.DATABASE;
-
-(async () => {
-    await mongoose
-        .connect(`${database}`, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        })
-        .then(console.log("connect to monggo db"));
-})();
 
 const cooldown = new Set();
 
@@ -35,7 +26,7 @@ module.exports = async (bot, msg) => {
     if (msg.author.bot) return;
     if (msg.channel.type === "dm") return;
 
-    const member = msg.guild.members.cache.filter((m) => !m.user.bot).size;
+    const member = msg.guild.members.cache.size;
 
     PrefixSchema.findOne(
         {
@@ -50,17 +41,45 @@ module.exports = async (bot, msg) => {
                     guildName: msg.guild.name,
                     oldGuildName: msg.guild.name,
                     guildID: msg.guild.id,
-                    prefix: "-",
                     member,
-                    levelSytem: true,
+                    configGuild: {
+                        Custome_Message: {
+                            level_Up: "@user Level Up To @levelup",
+                            Welcome:
+                                "@user Joined!, Welcome To @guild Now We Have @membercount Member",
+                            Leave:
+                                "@user Leave!, Bye Bye Now We have @membercount Member",
+                        },
+
+                        Channel: {
+                            level_Notification_Channel: "",
+                            Member_Count_Channel: "",
+                            Welcome_Channel: "",
+                            Leave_Channel: "",
+                            Mod_log_Channel: "",
+                        },
+
+                        General: {
+                            prefix: "<",
+                            leveling_System: true,
+                        },
+
+                        Roles: {
+                            Auto_Assign_Role: "",
+                        },
+                    },
                 });
 
                 newPrefix.save().catch((err) => console.log(err));
                 return;
             }
 
-            // bot prefix
-            const prefix = pref.prefix || "-";
+            // constractor
+            // bot prefif
+            const { prefix, leveling_System } = await pref.configGuild.General;
+            const { level_Up } = await pref.configGuild.Custome_Message;
+            const { level_Notification_Channel } = await pref.configGuild
+                .Channel;
 
             // making args
             let args = msg.content.slice(prefix.length).trim().split(/ +/g);
@@ -75,7 +94,7 @@ module.exports = async (bot, msg) => {
             let expAdd = Math.floor(Math.random() * 7) + 8;
 
             let nextlvl = 500;
-            if (pref.levelSytem) {
+            if (leveling_System) {
                 levelSchema.findOne(
                     {
                         userid: msg.author.id,
@@ -83,6 +102,10 @@ module.exports = async (bot, msg) => {
                     },
                     (err, level) => {
                         if (err) console.log(err);
+
+                        const levelUser = msg.guild.members.cache.find(
+                            (usr) => usr.id === level.userid
+                        );
 
                         if (!level) {
                             const newLevel = new levelSchema({
@@ -100,10 +123,11 @@ module.exports = async (bot, msg) => {
                         } else {
                             level.xp = level.xp + expAdd;
 
-                            if (level.nextLevel <= level.xp) {
+                            if (level.nextLevel < level.xp) {
                                 level.level = level.level + 1;
+
                                 level.nextLevel =
-                                    level.level * 500 * level.level;
+                                    (level.level + level.level) * 500;
                                 const lvlEmbed = new MessageEmbed()
                                     .setColor("BLUE")
                                     .setAuthor(
@@ -111,14 +135,34 @@ module.exports = async (bot, msg) => {
                                         level.avatar
                                     )
                                     .setDescription(
-                                        `<@${level.userid}> telah naik level ke level ${level.level}`
+                                        `${customMessage(
+                                            bot,
+                                            levelUser,
+                                            level_Up,
+                                            true,
+                                            level.level
+                                        )}`
                                     )
                                     .setFooter(
-                                        `${bot.user.username} - Level System`,
+                                        `${
+                                            bot.user.username
+                                        } | Level System | ${dateNow(
+                                            msg,
+                                            false
+                                        )}`,
                                         bot.user.displayAvatarURL()
                                     );
 
-                                msg.channel.send(lvlEmbed);
+                                const channel = msg.guild.channels.cache.find(
+                                    (x) => x.id === level_Notification_Channel
+                                );
+                                if (channel) {
+                                    channel.send(lvlEmbed);
+                                } else {
+                                    msg.channel
+                                        .send(lvlEmbed)
+                                        .catch(console.error);
+                                }
                             }
 
                             level.save().catch((err) => console.log(err));
@@ -143,8 +187,11 @@ module.exports = async (bot, msg) => {
                 return msg.channel.send(embed);
             }
 
-            // checking if user not using preifx
-            if (!msg.content.startsWith(prefix)) return;
+            if (getStartwith(msg)) return;
+
+            if (!msg.content.startsWith(prefix))
+                // checking if user not using preifx
+                return;
 
             // ceking jika member salah memasukan command
             if (!command) {
@@ -171,3 +218,12 @@ module.exports = async (bot, msg) => {
         }
     );
 };
+
+function getStartwith(msg) {
+    return (
+        msg.content.startsWith("<@&") ||
+        msg.content.startsWith("<#") ||
+        msg.content.startsWith("<@") ||
+        msg.content.startsWith("<@!")
+    );
+}

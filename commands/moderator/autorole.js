@@ -1,4 +1,4 @@
-const guildSchema = require("../../model/prefix.js");
+const guildSchema = require("../../model/guild.js");
 
 module.exports = {
     help: {

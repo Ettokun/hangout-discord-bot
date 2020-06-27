@@ -1,24 +1,29 @@
 const mongoose = require("mongoose");
 const { MessageEmbed } = require("discord.js");
-const prefix = require("../../model/prefix.js");
+const prefix = require("../../model/guild.js");
 
 module.exports = {
     help: {
         name: "prefix",
-        description: "Mengganti prefix bot",
+        description: "Change Bot Prefix",
         alias: "",
-        category: "moderator",
+        category: "util",
         usage: "[New prefix]",
         accessableby: "Moderator/Admin",
     },
 
     run: async (bot, msg, args) => {
-        const member = msg.guild.members.cache.filter((m) => !m.user.bot).size;
+        const member = msg.guild.members.cache.size;
         let newPrefix;
 
-        if (!msg.member.hasPermission("MANAGE_SERVER"))
+        if (
+            !msg.member.hasPermission("MANAGE_GUILD", {
+                checkAdmin: false,
+                checkOwner: false,
+            })
+        )
             return msg.channel
-                .send("No Have Permission")
+                .send("You Don't Have Permission")
                 .then((m) => m.delete({ timeout: 10000 }));
 
         prefix.findOne(
@@ -28,7 +33,7 @@ module.exports = {
             (err, pref) => {
                 if (err) console.log(err);
 
-                newPrefix = pref.prefix;
+                newPrefix = pref.configGuild.General.prefix;
                 if (!args[0]) {
                     return msg.channel.send(
                         `Bot Prefix: ${newPrefix}\nType \`${newPrefix}prefix [NewPrefix]\``
@@ -43,7 +48,7 @@ module.exports = {
                     .setAuthor(pref.guildName, bot.user.displayAvatarURL())
                     .setThumbnail(msg.guild.iconURL());
 
-                pref.prefix = args[0];
+                pref.configGuild.General.prefix = args[0];
                 pref.member = member;
 
                 embed.setDescription(

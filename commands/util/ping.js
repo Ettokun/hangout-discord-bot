@@ -7,7 +7,7 @@ module.exports = {
         name: "ping",
         description: "Testing bot Online or Offline ignore this",
         alias: "",
-        category: "misc",
+        category: "util",
         usage: "",
         accessableby: "Member",
     },

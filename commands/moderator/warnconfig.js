@@ -28,19 +28,19 @@ module.exports = {
 
         if (!args[0]) {
             configEmbed.setDescription(
-                `type ${prefix}warnconfig channel [#channelname] to set warn channel\n\ntype ${prefix}warnconfig maxwarn [number] to set MaxWarn\n\ntype ${prefix}warnconfig punish [ban | kick | mute] to set warn punishment\n`
+                `type ${prefix}warnconfig channel [#channelname] to set warn channel\n\type ${prefix}warnconfig maxwarn [number] to set MaxWarn\n\ntype ${prefix}warnconfig punish [ban | kick | mute] to set warn punishment\n`
             );
             msg.channel.send(configEmbed);
         } else {
             // set channel start
-            if (args[0].toLowerCase() === "channel") {
+            if (args[0].toLowerCase() === "channelss") {
                 const findChannel = msg.guild.channels.cache.find(
-                    (channel) => `<#${channel.id}>` === args.join(" ").slice(8)
+                    (channel) => `<#${channel.id}>` === args.slice(1).join(" ")
                 );
 
                 if (!findChannel) {
                     return msg.channel.send(
-                        `${args.join(" ").slice(7)} this channel is not found`
+                        `${args.slice(1).join(" ")} this channel is not found`
                     );
                 } else {
                     ChannelWarn.findOne(
@@ -72,9 +72,6 @@ module.exports = {
                                 newChannels
                                     .save()
                                     .catch((err) => console.log(err));
-                                return msg.channel.send(
-                                    `Warn Channel set to ${findChannel.name}`
-                                );
                             } else {
                                 channels.channels.warnChannel =
                                     findChannel.name;
@@ -84,9 +81,6 @@ module.exports = {
                                 channels
                                     .save()
                                     .catch((err) => console.log(err));
-                                return msg.channel.send(
-                                    `Warn Channel set to ${findChannel.name}`
-                                );
                             }
                         }
                     );

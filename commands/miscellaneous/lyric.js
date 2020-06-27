@@ -6,7 +6,7 @@ module.exports = {
         name: "lyric",
         description: "Bot will DM you and send The Lyrics of song",
         alias: ["lyrics"],
-        category: "misc",
+        category: "miscellaneous",
         usage: "[Song Name]",
         accessableby: "Member",
     },

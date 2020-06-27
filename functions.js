@@ -1,3 +1,5 @@
+const level = require("./model/level");
+
 module.exports = {
     getMember(msg, toFind = "") {
         toFind = toFind.toLowerCase();
@@ -19,6 +21,7 @@ module.exports = {
 
         return target;
     },
+
     dateNow: (msg, hours = false) => {
         if (!msg) throw "Missing Message";
 
@@ -37,6 +40,7 @@ module.exports = {
 
         return clock;
     },
+
     upTimer: (ms, sort = true) => {
         const sec = Math.floor((ms / 1000) % 60).toString();
         const min = Math.floor((ms / (1000 * 60)) % 60).toString();
@@ -57,5 +61,56 @@ module.exports = {
                 "0"
             )}h ${min.padStart(2, "0")}m ${sec.padStart(2, "0")}s`;
         }
+    },
+
+    customMessage: (bot, msg, custom, lvlgui, levels) => {
+        if (typeof lvlgui != "boolean") throw `Data Harus boolean`;
+
+        const customMsg = {
+            user: "@user",
+            membertag: "@membertag",
+            levelup: "@levelup",
+            guild: "@guild",
+            membercount: "@membercount",
+            guildowner: "@guildowner",
+        };
+        let message;
+        let {
+            user,
+            levelup,
+            guild,
+            membercount,
+            guildowner,
+            membertag,
+        } = customMsg;
+
+        /**
+         * if true = level
+         * if false = guild
+         */
+
+        if (lvlgui) {
+            message = custom
+                .replace(user, `<@${msg.user.id}>`)
+                .replace(levelup, `${levels}`);
+        } else {
+            if (bot === "welcome") {
+                message = custom
+                    .replace(user, `<@${msg.author.id}>`)
+                    .replace(guild, `**${msg.guild.name}**`)
+                    .replace(membertag, `**${levels}**`)
+                    .replace(membercount, `${msg.guild.members.cache.size}`)
+                    .replace(guildowner, `**${msg.guild.owner.user.tag}**`);
+            } else {
+                message = custom
+                    .replace(user, `<@${msg.id}>`)
+                    .replace(guild, `**${msg.guild.name}**`)
+                    .replace(membercount, `${msg.guild.members.cache.size}`)
+                    .replace(membertag, `**${levels}**`)
+                    .replace(guildowner, `**${msg.guild.owner.user.tag}**`);
+            }
+        }
+
+        return message;
     },
 };

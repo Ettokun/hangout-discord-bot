@@ -42,7 +42,7 @@ module.exports = {
                     category.slice(0, 1).toUpperCase() + category.slice(1);
                 try {
                     embed.addField(
-                        `:point_right: ${capital} [${dir.size}]:`,
+                        ` ❯ ${capital} [${dir.size}]:`,
                         dir.map((c) => `\`${c.help.name}\``).join(", ")
                     );
                 } catch (r) {

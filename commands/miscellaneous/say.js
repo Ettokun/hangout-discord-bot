@@ -5,7 +5,7 @@ module.exports = {
         name: "say",
         description: "Bot Will say what you wanna say",
         alias: ["saying", "talk"],
-        category: "misc",
+        category: "miscellaneous",
         usage: "[word]",
         accessableby: "Member",
     },

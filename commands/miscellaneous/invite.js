@@ -5,7 +5,7 @@ module.exports = {
         name: "invite",
         descripsi: "Invite bot to your server",
         alias: ["inv", "toserver"],
-        category: "misc",
+        category: "miscellaneous",
         usage: "",
         accessableby: "Member",
     },

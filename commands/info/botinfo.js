@@ -33,7 +33,7 @@ module.exports = {
             .addField(`**User**`, bot.users.cache.size, true)
             .addField(`**Uptime**`, `${upTimer(bot.uptime, false)}`, true)
             .addField(`**Library**`, "discord.js", true)
-            .addField(`**Version**`, "1.1.2", true)
+            .addField(`**Version**`, "2.0.0", true)
             .addField(
                 `**Suport Bot**`,
                 `[VOTE](https://top.gg/bot/703427669605351434/vote)\n[DONATE](https://donatebot.io/checkout/581790531097722880)`,
@@ -45,7 +45,6 @@ module.exports = {
                 true
             )
             .addField(`**Invite**`, `[INVITE](https://bit.ly/2zattmq)`, true)
-            .setImage(`https://top.gg/api/widget/703427669605351434.png`)
             .setFooter(
                 `${bot.user.username} | Bot Info | Today At ${dateNow(
                     msg,

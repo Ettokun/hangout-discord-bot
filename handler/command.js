@@ -19,9 +19,11 @@ module.exports = (bot) => {
         "fun",
         "image",
         "info",
-        "misc",
+        "levels",
+        "miscellaneous",
         "moderator",
         "nsfw",
         "roles",
+        "util",
     ].forEach((x) => load(x));
 };

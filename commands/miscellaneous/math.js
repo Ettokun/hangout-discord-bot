@@ -5,7 +5,7 @@ module.exports = {
         name: "math",
         description: "Math command",
         alias: [],
-        category: "misc",
+        category: "miscellaneous",
         usage: "[number 1] [operation] [number 2]",
         accessableby: "Member",
     },

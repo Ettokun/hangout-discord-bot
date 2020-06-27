@@ -6,7 +6,7 @@ module.exports = {
         name: "avatar",
         description: "Showing Your avatar Or another member",
         alias: ["profile"],
-        category: "misc",
+        category: "miscellaneous",
         usage: "(mention member)",
         accessableby: "Member",
     },
@@ -22,7 +22,9 @@ module.exports = {
                 member.user.avatarURL()
             )
             .setDescription(`**${member.nickname || member.user.username}**`)
-            .setImage(member.user.displayAvatarURL({format: "png",size: 4096}));
+            .setImage(
+                member.user.displayAvatarURL({ format: "png", size: 4096 })
+            );
         msg.channel.send(embed);
     },
 };
