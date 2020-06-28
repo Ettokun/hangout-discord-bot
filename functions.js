@@ -98,7 +98,7 @@ module.exports = {
                 message = custom
                     .replace(user, `<@${msg.author.id}>`)
                     .replace(guild, `**${msg.guild.name}**`)
-                    .replace(membertag, `**${levels}**`)
+                    .replace(membertag, `**${msg.author.tag}**`)
                     .replace(membercount, `${msg.guild.members.cache.size}`)
                     .replace(guildowner, `**${msg.guild.owner.user.tag}**`);
             } else {
