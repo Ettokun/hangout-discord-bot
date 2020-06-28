@@ -24,9 +24,9 @@ module.exports = async (bot) => {
     ];
     let i = 0;
 
-    // setInterval(() => {
-    //     dbl.postStats(bot.guilds.cache.size);
-    // }, ms("30m"));
+    setInterval(() => {
+        dbl.postStats(bot.guilds.cache.size);
+    }, ms("30m"));
 
     setInterval(() => {
         i++;
