@@ -60,7 +60,7 @@ module.exports = async (bot, msg) => {
                         },
 
                         General: {
-                            prefix: "<",
+                            prefix: "-",
                             leveling_System: true,
                         },
 
@@ -126,7 +126,7 @@ module.exports = async (bot, msg) => {
                             if (level.nextLevel < level.xp) {
                                 level.level = level.level + 1;
 
-                                level.nextLevel = level.level ** level.level * 500;
+                                level.nextLevel = level.level ** 2 * 500;
 
                                 const lvlEmbed = new MessageEmbed()
                                     .setColor("BLUE")
