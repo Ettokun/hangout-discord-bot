@@ -91,7 +91,7 @@ module.exports = async (bot, msg) => {
                 bot.commands.get(bot.alias.get(cmd));
 
             // mongoose startmongoose level
-            let expAdd = Math.floor(Math.random() * 7) + 8;
+            let expAdd = Math.floor(Math.random() * 5) + 2;
 
             let nextlvl = 500;
             if (leveling_System) {
