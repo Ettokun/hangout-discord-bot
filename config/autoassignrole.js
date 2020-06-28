@@ -39,7 +39,7 @@ module.exports = async (bot, msg, swtich, prefix) => {
                     `Role With Name ${swtich} Is Not Found!`
                 );
 
-            guild.configGuild.Roles.Auto_Assign_Role = findChannel.id;
+            guild.configGuild.Roles.Auto_Assign_Role = findRole.id;
 
             msg.channel.send(LevelNotif);
 
