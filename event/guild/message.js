@@ -103,10 +103,6 @@ module.exports = async (bot, msg) => {
                     (err, level) => {
                         if (err) console.log(err);
 
-                        const levelUser = msg.guild.members.cache.find(
-                            (usr) => usr.id === level.userid
-                        );
-
                         if (!level) {
                             const newLevel = new levelSchema({
                                 guildid: msg.guild.id,
@@ -122,6 +118,10 @@ module.exports = async (bot, msg) => {
                             newLevel.save().catch((err) => console.log(err));
                         } else {
                             level.xp = level.xp + expAdd;
+
+                            const levelUser = msg.guild.members.cache.find(
+                                (usr) => usr.id === level.userid
+                            );
 
                             if (level.nextLevel < level.xp) {
                                 level.level = level.level + 1;
