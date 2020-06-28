@@ -126,8 +126,8 @@ module.exports = async (bot, msg) => {
                             if (level.nextLevel < level.xp) {
                                 level.level = level.level + 1;
 
-                                level.nextLevel =
-                                    (level.level + level.level) * 500;
+                                level.nextLevel = 5 ** 2 * 500;
+
                                 const lvlEmbed = new MessageEmbed()
                                     .setColor("BLUE")
                                     .setAuthor(
