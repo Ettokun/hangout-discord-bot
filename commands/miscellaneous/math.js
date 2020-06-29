@@ -10,6 +10,7 @@ module.exports = {
         accessableby: "Member",
     },
     run: async (bot, msg, args, prefix) => {
+        return;
         if (!args.join("")) {
             return msg.channel.send(
                 `Pls insert number and operation \nExemple:\n${prefix}math 20 + 30`
