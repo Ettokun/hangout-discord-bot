@@ -76,11 +76,11 @@ module.exports = async (bot, msg) => {
 
             // constractor
             // bot prefif
-            const { leveling_System } = await pref.configGuild.General;
+            const { prefix, leveling_System } = await pref.configGuild.General;
             const { level_Up } = await pref.configGuild.Custome_Message;
             const { level_Notification_Channel } = await pref.configGuild
                 .Channel;
-            const prefix = "<";
+
             // making args
             let args = msg.content.slice(prefix.length).trim().split(/ +/g);
             let cmd = args.shift().toLowerCase();
