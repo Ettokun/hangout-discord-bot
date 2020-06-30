@@ -2,8 +2,6 @@ const discord = require("discord.js");
 const ms = require("ms");
 const DBLapi = require("dblapi.js");
 const { config } = require("dotenv");
-const guildSchema = require("../../model/guild");
-const guild = require("../../model/guild");
 
 config({
     path: "D:\\discord\\hangout-discord-bot/.env",
@@ -25,7 +23,7 @@ module.exports = async (bot) => {
     let i = 0;
 
     setInterval(() => {
-        dbl.postStats(bot.guilds.cache.size);
+        dbl.postStats(bot.guilds.cache.size, bot.shard.ids, bot.shard.count);
     }, ms("30m"));
 
     setInterval(() => {

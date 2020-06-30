@@ -29,21 +29,21 @@ module.exports = {
             if (typeof output !== "string")
                 output = inspect(output, { depth: 2 });
 
+            if (args.join(" ").toLowerCase().includes("token"))
+                output = "You Big Ass";
+
             const embed = new MessageEmbed()
                 .setDescription(
                     stripIndent`
-                INPUT
-                \`\`\`
-                ${args.join(" ").slice(0, 30)}
-                \`\`\`
-                OUTPUT
+                **:inbox_tray: Output**
                 ${
                     output.length > 1950
                         ? await haste.post(output)
-                        : `\`\`\`js ${output}\`\`\``
+                        : `\`\`\`${output}\`\`\``
                 }
             `
                 )
+                .addField("**:question: Type**", `\`\`\`${typeof output}\`\`\``)
                 .setFooter(
                     `Executed in ${
                         difference[0] > 0 ? `${difference[0]}` : ""

@@ -34,7 +34,7 @@ module.exports = {
             )
             .setThumbnail(member.user.displayAvatarURL())
             .addField("Joined", joined, true)
-            .addField("Resgistered", created, true)
+            .addField("Registered", created, true)
             .addField("Role", role)
             .addField("Member Id", member.user.id, true)
             .setFooter(

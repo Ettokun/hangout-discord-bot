@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const { evaluate } = require("mathjs");
 
 module.exports = {
     help: {
@@ -10,23 +11,18 @@ module.exports = {
         accessableby: "Member",
     },
     run: async (bot, msg, args, prefix) => {
-        return;
-        if (!args.join("")) {
+        const input = args.join(" ");
+
+        if (!input) {
             return msg.channel.send(
                 `Pls insert number and operation \nExemple:\n${prefix}math 20 + 30`
             );
         }
-        const x = args.join().split(/[0-9]/g);
 
-        const hasil =
-            x.filter((x) => x === "x").length >= 1
-                ? undefined
-                : eval(args.join(" "));
-        if (!hasil) return msg.channel.send(`x is undefined`);
         const evalEmbed = new MessageEmbed()
             .setAuthor(`${msg.author.tag}`, msg.author.displayAvatarURL())
-            .addField("**Operation**", `\`${args.join(" ")}\``)
-            .addField("**Result**", `\`${hasil}\``)
+            .addField("**Operation**", `\`${input}\``)
+            .addField("**Result**", `\`${evaluate(input)}\``)
             .setFooter(
                 `${bot.user.username} | math`,
                 bot.user.displayAvatarURL()

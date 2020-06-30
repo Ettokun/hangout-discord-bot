@@ -76,11 +76,11 @@ module.exports = async (bot, msg) => {
 
             // constractor
             // bot prefif
-            const { prefix, leveling_System } = await pref.configGuild.General;
+            const { leveling_System } = await pref.configGuild.General;
             const { level_Up } = await pref.configGuild.Custome_Message;
             const { level_Notification_Channel } = await pref.configGuild
                 .Channel;
-
+            const prefix = "<";
             // making args
             let args = msg.content.slice(prefix.length).trim().split(/ +/g);
             let cmd = args.shift().toLowerCase();
@@ -198,7 +198,7 @@ module.exports = async (bot, msg) => {
                 msg.channel
                     .send(":x: **Sorry, Command not found!**")
                     .then((m) => m.delete({ timeout: 10000 }));
-                msg.delete();
+                msg.delete().catch();
                 return;
             } else {
                 // ceking jika member melakukan command

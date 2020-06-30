@@ -25,8 +25,8 @@ module.exports = {
     dateNow: (msg, hours = false) => {
         if (!msg) throw "Missing Message";
 
-        let getHour = new Date(msg.createdAt).getHours();
-        let getMenit = new Date(msg.createdAt).getMinutes();
+        let getHour = new Date(msg.createdAt).toTimeString().slice(0, 2);
+        let getMenit = new Date(msg.createdAt).toTimeString().slice(3, 5);
         let amPM = getHour < 12 ? "AM" : "PM";
         let clock;
 

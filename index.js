@@ -1,12 +1,14 @@
-const { Client, Collection } = require("discord.js");
+const { ShardingManager } = require("discord.js");
 const { config } = require("dotenv");
-const bot = new Client({ disableEveryone: true });
-
-["commands", "alias"].forEach((x) => (bot[x] = new Collection()));
-["mongoose", "command", "event"].forEach((x) => require(`./handler/${x}`)(bot));
 
 config({
     path: "D:\\discord\\hangout-discord-bot/.env",
 });
 
-bot.login(process.env.TOKEN);
+const maneger = new ShardingManager("./bot.js", {
+    token: process.env.TOKEN,
+    totalShards: 2,
+});
+
+maneger.spawn();
+maneger.on("shardCreate", (shard) => console.log(`Launched shard ${shard.id}`));
