@@ -18,7 +18,6 @@ module.exports = {
         const channel = await bot.shard.broadcastEval(
             "this.channels.cache.size"
         );
-        console.log(channel.reduce((a, b) => a + b, 0));
 
         const create = new Date(bot.user.createdAt);
 

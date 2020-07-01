@@ -7,7 +7,7 @@ config({
 
 const maneger = new ShardingManager("./bot.js", {
     token: process.env.TOKEN,
-    totalShards: 2,
+    totalShards: 1,
 });
 
 maneger.spawn();
