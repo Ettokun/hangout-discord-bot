@@ -22,9 +22,9 @@ module.exports = async (bot) => {
     ];
     let i = 0;
 
-    // setInterval(() => {
-    //     dbl.postStats(bot.guilds.cache.size, bot.shard.ids, bot.shard.count);
-    // }, ms("30m"));
+    setInterval(() => {
+        dbl.postStats(bot.guilds.cache.size, bot.shard.ids, bot.shard.count);
+    }, ms("30m"));
 
     setInterval(() => {
         i++;
