@@ -21,6 +21,8 @@ module.exports = {
             return message.channel.send("**No music currently Play**");
         }
 
+        const { voice } = message.guild.me;
+
         serverQueue.songs = [];
         serverQueue.reqBy = [];
         if (voice.selfDeaf) voice.setSelfDeaf(false);
