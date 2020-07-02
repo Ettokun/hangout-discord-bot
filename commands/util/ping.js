@@ -22,12 +22,7 @@ module.exports = {
                         endTime - firstTime
                     }ms\`\nHeartbeat! :heartbeat: \`${bot.ws.ping}ms\``
                 )
-                .setFooter(
-                    `${bot.user.username} | Ping | Today at ${dateNow(
-                        msg,
-                        false
-                    )}`
-                );
+                .setFooter(`${bot.user.username} | Ping`);
             message.edit(pingEmbed);
         });
     },

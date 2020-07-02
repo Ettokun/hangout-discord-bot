@@ -21,12 +21,12 @@ module.exports = () => {
     mongoose.Promise = global.Promise;
 
     mongoose.connection.on("connected", () => {
-        console.log(`Mongoose Succes Connected`);
+        console.log(`\nMongoose Succes Connected`);
     });
     mongoose.connection.on("err", (err) => {
-        console.log(`Mongoose Connection Err: \n ${err.stack}`);
+        console.log(`\nMongoose Connection Err: \n ${err.stack}`);
     });
     mongoose.connection.on("disconnected", () => {
-        console.log(`Mongoose Connection disconnected`);
+        console.log(`\nMongoose Connection disconnected`);
     });
 };

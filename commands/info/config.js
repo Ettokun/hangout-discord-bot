@@ -2,6 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const guildSchema = require("../../model/guild");
 const { stripIndent } = require("common-tags");
 const { dateNow } = require("../../functions");
+const { ownerId } = require("../../utility.json");
 
 module.exports = {
     help: {
@@ -14,7 +15,7 @@ module.exports = {
     },
     run: async (bot, msg, args, prefix) => {
         if (!msg.member.hasPermission("MANAGE_GUILD", { checkOwner: false })) {
-            if (msg.author.id !== "348651859646349316") {
+            if (msg.author.id !== ownerId) {
                 console.log("hai");
                 return msg.channel.send("You No Have Permission");
             }

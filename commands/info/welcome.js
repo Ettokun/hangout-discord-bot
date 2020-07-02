@@ -32,12 +32,7 @@ module.exports = {
                             false
                         )}\n\nType ${prefix}config welcome To Set Welcome Message`
                     )
-                    .setFooter(
-                        `${bot.user.username} | Welcome | Today At ${dateNow(
-                            msg,
-                            false
-                        )}`
-                    );
+                    .setFooter(`${bot.user.username} | Welcome`);
 
                 msg.channel.send(WelcomeEmbed);
             }

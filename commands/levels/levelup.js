@@ -37,12 +37,7 @@ module.exports = {
                             Math.floor(Math.random() * 10) + 1
                         )}\n\nType ${prefix}config levelup To Set level up Message`
                     )
-                    .setFooter(
-                        `${bot.user.username} | Welcome | Today At ${dateNow(
-                            msg,
-                            false
-                        )}`
-                    );
+                    .setFooter(`${bot.user.username} | Levelup`);
 
                 msg.channel.send(WelcomeEmbed);
             }

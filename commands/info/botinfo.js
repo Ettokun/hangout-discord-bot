@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const { dateNow, upTimer } = require("../../functions");
+const { ownerId } = require("../../utility.json");
 
 module.exports = {
     help: {
@@ -25,7 +26,7 @@ module.exports = {
         const time = create.toLocaleTimeString();
 
         const owner =
-            msg.guild.ownerID === "348651859646349316"
+            msg.guild.ownerID === ownerId
                 ? `${msg.guild.owner.user.tag}`
                 : "HAVEFUN#8812";
 
@@ -65,10 +66,7 @@ module.exports = {
             )
             .addField(`**Invite**`, `[INVITE](https://bit.ly/2zattmq)`)
             .setFooter(
-                `${bot.user.username} | Bot Info | Today At ${dateNow(
-                    msg,
-                    false
-                )}`,
+                `${bot.user.username} | Bot Info`,
                 bot.user.displayAvatarURL()
             );
 

@@ -3,6 +3,7 @@ const { dateNow } = require("../../functions");
 const { inspect } = require("util");
 const { stripIndent } = require("common-tags");
 const { VultrexHaste } = require("vultrex.haste");
+const { ownerId } = require("../../utility.json");
 
 const haste = new VultrexHaste({ url: "https://hasteb.in" });
 
@@ -16,14 +17,14 @@ module.exports = {
         accessableby: "DEVELOPERS!",
     },
     run: async (bot, msg, args, prefix) => {
-        if (msg.author.id !== "348651859646349316")
+        if (msg.author.id !== ownerId)
             return msg.reply(`You Not My Owner Eval Command Just for My Owner`);
 
         if (!args[0]) return msg.reply(`Masukan JavaScript Code`);
 
         try {
             const start = process.hrtime();
-            let output = eval(args.join(" "));
+            let output = await eval(args.join(" "));
             const difference = process.hrtime(start);
 
             if (typeof output !== "string")

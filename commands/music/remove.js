@@ -33,7 +33,7 @@ module.exports = {
 
         if (
             parseInt(args[0]) > serverQueue.songs.length ||
-            parseInt(args[0]) < 0
+            parseInt(args[0]) < 1
         ) {
             return msg.channel.send(`:x: Song not found in list ${args[0]}`);
         }
@@ -41,9 +41,11 @@ module.exports = {
         const queue = serverQueue.songs;
         const req = serverQueue.reqBy;
 
-        msg.channel.send(`Remove ${queue[parseInt(args[0]) - 1].title} From Playlist`);
+        msg.channel.send(
+            `Remove ${queue[parseInt(args[0])].title} From Playlist`
+        );
 
-        queue.splice(parseInt(args[0]) - 1, 1);
-        req.splice(parseInt(args[0]) - 1, 1);
+        queue.splice(parseInt(args[0]), 1);
+        req.splice(parseInt(args[0]), 1);
     },
 };

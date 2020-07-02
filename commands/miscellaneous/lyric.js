@@ -3,15 +3,23 @@ const { MessageEmbed } = require("discord.js");
 
 module.exports = {
     help: {
-        name: "lyric",
+        name: "lyrics",
         description: "Bot will DM you and send The Lyrics of song",
-        alias: ["lyrics"],
+        alias: ["lyric"],
         category: "miscellaneous",
-        usage: "[Song Name]",
+        usage: "(Song Name)",
         accessableby: "Member",
     },
     run: async (bot, msg, args) => {
-        const lyric = args.join(" ");
+        let lyric;
+        const serverQueue = msg.client.queue.get(msg.guild.id);
+
+        if (serverQueue) {
+            lyric = serverQueue.songs[0].title;
+            if (args[0]) lyric = args.join(" ");
+        } else {
+            lyric = args.join(" ");
+        }
 
         let message = await msg.channel.send("Wait...");
 

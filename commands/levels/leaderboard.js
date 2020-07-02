@@ -29,10 +29,7 @@ module.exports = {
                 )
                 .setColor("BLUE")
                 .setFooter(
-                    `${bot.user.tag} | LeaderBoard | Today at ${dateNow(
-                        msg,
-                        false
-                    )}`,
+                    `${bot.user.tag} | LeaderBoard`,
                     bot.user.displayAvatarURL({ format: "png" })
                 );
 

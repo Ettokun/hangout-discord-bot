@@ -5,7 +5,7 @@ module.exports = (bot) => {
         const commands = readdirSync(`./commands/${dirs}/`).filter((d) =>
             d.endsWith(".js")
         );
-
+        console.log(`${dirs} SUCCESS LOAD`);
         for (let file of commands) {
             const pull = require(`../commands/${dirs}/${file}`);
 
@@ -14,12 +14,6 @@ module.exports = (bot) => {
                 pull.help.alias.forEach((a) =>
                     bot.alias.set(a, pull.help.name)
                 );
-        }
-
-        const commandName = readdirSync("./commands/");
-
-        for (const com of commandName) {
-            console.log(`${com} Command SUCCESS LOAD`);
         }
     };
     [

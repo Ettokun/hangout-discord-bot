@@ -1,4 +1,5 @@
 const level = require("./model/level");
+const prettyms = require("pretty-ms");
 
 module.exports = {
     getMember(msg, toFind = "") {
@@ -20,25 +21,6 @@ module.exports = {
         if (!target) target = msg.member;
 
         return target;
-    },
-
-    dateNow: (msg, hours = false) => {
-        if (!msg) throw "Missing Message";
-
-        let getHour = new Date(msg.createdAt).toTimeString().slice(0, 2);
-        let getMenit = new Date(msg.createdAt).toTimeString().slice(3, 5);
-        let amPM = getHour < 12 ? "AM" : "PM";
-        let clock;
-
-        if (hours) {
-            clock = new Date(msg.createdAt).toTimeString().slice(0, 5);
-        } else {
-            getHour = getHour > 12 ? getHour - 12 : getHour;
-            getHour = ("0" + getHour).slice(-2);
-            clock = `${getHour}:${getMenit} ${amPM}`;
-        }
-
-        return clock;
     },
 
     upTimer: (ms, sort = true) => {

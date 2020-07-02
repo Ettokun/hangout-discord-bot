@@ -20,6 +20,7 @@
     "node-fetch": "^2.6.0",
     "novelcovid": "^2.1.0",
     "opusscript": "0.0.7",
+    "pretty-ms": "^7.0.0",
     "random-puppy": "^1.1.0",
     "simple-youtube-api": "^5.2.1",
     "snekfetch": "^4.0.4",

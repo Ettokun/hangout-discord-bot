@@ -112,30 +112,34 @@ module.exports = {
                 };
             } catch (error) {
                 // if api 1 get limit
-                console.error(error);
+                console.error(error.message);
 
                 youtube = new YoutubeAPI(YTAPISEC);
 
-                const result = await youtube
-                    .search(targetsong)
-                    .catch((err) => console.log(err));
+                try {
+                    const result = await youtube
+                        .search(targetsong)
+                        .catch((err) => console.log(err));
 
-                songData = await ytdl
-                    .getInfo(result[0].url)
-                    .catch((err) => console.log(err));
+                    songData = await ytdl
+                        .getInfo(result[0].url)
+                        .catch((err) => console.log(err));
 
-                song = {
-                    title: songData.title,
-                    url: songData.video_url,
-                    duration: songData.length_seconds,
-                    author: songData.author.name || songData.author.user,
-                    likes: songData.likes,
-                };
+                    song = {
+                        title: songData.title,
+                        url: songData.video_url,
+                        duration: songData.length_seconds,
+                        author: songData.author.name || songData.author.user,
+                        likes: songData.likes,
+                    };
 
-                author = {
-                    userID: message.author.id,
-                    UserName: message.author.username,
-                };
+                    author = {
+                        userID: message.author.id,
+                        UserName: message.author.username,
+                    };
+                } catch (error) {
+                    console.error(error);
+                }
             }
         }
 
