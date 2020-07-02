@@ -41,7 +41,7 @@ module.exports = {
         const queue = serverQueue.songs;
         const req = serverQueue.reqBy;
 
-        msg.channel.send(`Remove ${queue[parseInt(args[0]) - 1]} From Playlist`);
+        msg.channel.send(`Remove ${queue[parseInt(args[0]) - 1].title} From Playlist`);
 
         queue.splice(parseInt(args[0]) - 1, 1);
         req.splice(parseInt(args[0]) - 1, 1);
