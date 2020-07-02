@@ -43,6 +43,6 @@ module.exports = {
 
         serverQueue.connection.dispatcher.end();
 
-        msg.channel.send(`Jump to song ${queue}`);
+        msg.channel.send(`Jump to song ${queue[0]}`);
     },
 };
